@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Notification - Wireframe</title>
+    
+    <!-- Mantine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/@mantine/core@7.3.2/styles.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: #e0e0e0;
+            border-right: 1px solid #999;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            background-color: #d0d0d0;
+            border: 1px solid #999;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            background-color: #c0c0c0;
+        }
+
+        .nav-link.active {
+            background-color: #888;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 24px;
+            border: 1px solid #ccc;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: white;
+            padding: 30px;
+            border: 1px solid #ccc;
+        }
+
+        .form-row {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-row.row-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .form-row.row-full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-row.row-checkbox {
+            grid-template-columns: auto auto;
+            justify-content: start;
+            gap: 40px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 1px solid #999;
+            background-color: white;
+            color: #333;
+            font-family: inherit;
+        }
+
+        .form-input:disabled {
+            background-color: #e0e0e0;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-checkbox {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            cursor: pointer;
+            accent-color: #888;
+        }
+
+        .form-checkbox-label {
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .form-actions {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-submit {
+            padding: 12px 32px;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: #888;
+            color: white;
+            border: 1px solid #666;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #999;
+        }
+
+        .btn-submit:active {
+            background-color: #777;
+        }
+
+        @media (max-width: 1200px) {
+            .form-row.row-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .form-row.row-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row.row-checkbox {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #999;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 16px;
+            }
+
+            .form-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="logo" title="PSN Emulator">♠</div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="player-account.html" class="nav-link">Player Account</a>
+            </li>
+            <li class="nav-item">
+                <a href="transactions.html" class="nav-link">Transactions</a>
+            </li>
+            <li class="nav-item">
+                <a href="data-seeding.html" class="nav-link">Data Seeding</a>
+            </li>
+            <li class="nav-item">
+                <a href="partner-notification.html" class="nav-link active">Partner Notification</a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Partner Notification</h1>
+            <p class="page-subtitle">Create and manage partner notifications</p>
+        </div>
+
+        <!-- Form Section -->
+        <section class="form-section">
+            <form id="notificationForm">
+                <!-- First Row: id, agentId, templateId -->
+                <div class="form-row row-3">
+                    <div class="form-group">
+                        <label class="form-label">ID</label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="id" 
+                            value="a1b2c3d4-e5f6-7890-abcd-ef1234567890" 
+                            disabled
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Agent ID</label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="agentId" 
+                            value="softQAFR" 
+                            disabled
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Template ID</label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="templateId" 
+                            value="templatet123"
+                        >
+                    </div>
+                </div>
+
+                <!-- Second Row: expiresAt, clientId, brand -->
+                <div class="form-row row-3">
+                    <div class="form-group">
+                        <label class="form-label">Expires At</label>
+                        <input 
+                            type="datetime-local" 
+                            class="form-input" 
+                            id="expiresAt"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Client ID</label>
+                        <select class="form-select" id="clientId">
+                            <option value="">Select Client</option>
+                            <option value="client-001">Client 001</option>
+                            <option value="client-002">Client 002</option>
+                            <option value="client-003">Client 003</option>
+                            <option value="client-004">Client 004</option>
+                            <option value="client-005">Client 005</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Brand</label>
+                        <select class="form-select" id="brand">
+                            <option value="">Select Brand</option>
+                            <option value="brand-alpha">Brand Alpha</option>
+                            <option value="brand-beta">Brand Beta</option>
+                            <option value="brand-gamma">Brand Gamma</option>
+                            <option value="brand-delta">Brand Delta</option>
+                            <option value="brand-epsilon">Brand Epsilon</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Third Row: jurisdiction, strategy, location -->
+                <div class="form-row row-3">
+                    <div class="form-group">
+                        <label class="form-label">Jurisdiction</label>
+                        <select class="form-select" id="jurisdiction">
+                            <option value="">Select Jurisdiction</option>
+                            <option value="IT">IT</option>
+                            <option value="ES">ES</option>
+                            <option value="FR">FR</option>
+                            <option value="PT">PT</option>
+                            <option value="BE">BE</option>
+                            <option value="DE">DE</option>
+                            <option value="BG">BG</option>
+                            <option value="GR">GR</option>
+                            <option value="SE">SE</option>
+                            <option value="DK">DK</option>
+                            <option value="RO">RO</option>
+                            <option value="CH">CH</option>
+                            <option value="NL">NL</option>
+                            <option value="UK">UK</option>
+                            <option value="CZ">CZ</option>
+                            <option value="IN">IN</option>
+                            <option value="EE">EE</option>
+                            <option value="ARBA">ARBA</option>
+                            <option value="CAON">CAON</option>
+                            <option value="INTERNATIONAL">INTERNATIONAL</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Strategy</label>
+                        <select class="form-select" id="strategy">
+                            <option value="">Select Strategy</option>
+                            <option value="IMMEDIATE">IMMEDIATE</option>
+                            <option value="NEXT_LOGIN">NEXT_LOGIN</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <select class="form-select" id="location">
+                            <option value="">Select Location</option>
+                            <option value="LOBBY">LOBBY</option>
+                            <option value="ACTIVE_WINDOW">ACTIVE_WINDOW</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Fourth Row: templateContext -->
+                <div class="form-row row-full">
+                    <div class="form-group">
+                        <label class="form-label">Template Context</label>
+                        <textarea 
+                            class="form-textarea" 
+                            id="templateContext" 
+                            placeholder="key1:value1&#10;key2:value2"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Fifth Row: missable, requiresConfirmation -->
+                <div class="form-row row-checkbox">
+                    <div class="form-checkbox-group">
+                        <input 
+                            type="checkbox" 
+                            class="form-checkbox" 
+                            id="missable"
+                        >
+                        <label class="form-checkbox-label" for="missable">Missable</label>
+                    </div>
+                    <div class="form-checkbox-group">
+                        <input 
+                            type="checkbox" 
+                            class="form-checkbox" 
+                            id="requiresConfirmation"
+                        >
+                        <label class="form-checkbox-label" for="requiresConfirmation">Requires Confirmation</label>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Submit</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Generate random UUID on page load
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        // Set random UUID on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('id').value = generateUUID();
+        });
+
+        // Handle form submission
+        document.getElementById('notificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Form submitted successfully!');
+        });
+    </script>
+</body>
+</html>

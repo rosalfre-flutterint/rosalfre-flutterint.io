@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions - Wireframe</title>
+    
+    <!-- Mantine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/@mantine/core@7.3.2/styles.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: #e0e0e0;
+            border-right: 1px solid #999;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: white;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            background-color: #d0d0d0;
+            border: 1px solid #999;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            background-color: #c0c0c0;
+        }
+
+        .nav-link.active {
+            background-color: #888;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 24px;
+            border: 1px solid #ccc;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .section {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 30px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+            color: #333;
+        }
+
+        /* Layout for side-by-side filter and table */
+        .content-layout {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .filter-sidebar {
+            flex: 0 0 280px;
+            min-width: 280px;
+        }
+
+        .table-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #999;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #999;
+        }
+
+        th {
+            background-color: #d0d0d0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        th.sortable {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            padding-right: 30px;
+        }
+
+        th.sortable:hover {
+            background-color: #c0c0c0;
+        }
+
+        th.sortable::after {
+            content: '⇅';
+            position: absolute;
+            right: 12px;
+            opacity: 0.5;
+        }
+
+        th.sortable.asc::after {
+            content: '↑';
+            opacity: 1;
+        }
+
+        th.sortable.desc::after {
+            content: '↓';
+            opacity: 1;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+
+        tbody tr:hover {
+            background-color: #e8e8e8;
+        }
+
+        /* Expandable Row Styles */
+        .expandable-row {
+            display: none;
+            background-color: #f9f9f9;
+        }
+
+        .expandable-row.expanded {
+            display: table-row;
+        }
+
+        .expandable-content {
+            padding: 20px 12px;
+        }
+
+        .context-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .context-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .context-label {
+            font-weight: 600;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .context-value {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .clickable-id {
+            cursor: pointer;
+            color: #333;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clickable-id:hover {
+            color: #666;
+        }
+
+        .expand-icon {
+            font-size: 12px;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .expand-icon.expanded {
+            transform: rotate(90deg);
+        }
+
+        .id-text {
+            text-decoration: underline;
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .form-label .required {
+            color: #666;
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 1px solid #999;
+            background-color: #ffffff;
+            color: #333;
+            outline: none;
+            transition: all 0.2s;
+            appearance: none;
+        }
+
+        .form-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: #666;
+            box-shadow: 0 0 0 2px rgba(102, 102, 102, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #777;
+            margin-top: 6px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .btn {
+            padding: 12px 24px;
+        .btn {
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #999;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            height: 48px;
+        }btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .btn-reset {
+            background-color: #d0d0d0;
+            color: #333;
+        }
+
+        .btn-reset:hover {
+            background-color: #c0c0c0;
+        }
+
+        .btn-submit {
+            background-color: #888;
+            color: white;
+            border-color: #666;
+        }
+
+        .btn-submit:hover {
+            background-color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                grid-column: 1;
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 60px;
+                padding: 10px;
+            }
+
+            .main-content {
+                margin-left: 60px;
+                padding: 15px;
+            }
+
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .nav-link {
+                font-size: 0;
+                padding: 12px 8px;
+                text-align: center;
+            }
+
+            .nav-link::before {
+                content: '▪';
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="logo" title="PSN Emulator">♠</div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="player-account.html" class="nav-link">Player Account</a>
+            </li>
+            <li class="nav-item">
+                <a href="transactions.html" class="nav-link active">Transactions</a>
+            </li>
+            <li class="nav-item">
+                <a href="data-seeding.html" class="nav-link">Data Seeding</a>
+            </li>
+            <li class="nav-item">
+                <a href="partner-notification.html" class="nav-link">Partner Notification</a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Transactions</h1>
+            <p class="page-subtitle">View and filter transaction records</p>
+        </div>
+
+        <!-- Section: Transactions and Filtering -->
+        <section class="section">
+            <h2 class="section-title">Transactions and Filtering</h2>
+
+            <!-- Filter Form -->
+            <form id="filterForm">
+                <div class="form-grid">
+                    <!-- Player ID Field -->
+                    <div class="form-group">
+                        <label class="form-label" for="playerId">
+                            Player ID
+                        </label>
+                        <input 
+                            type="text" 
+                            id="playerId" 
+                            class="form-input" 
+                            placeholder="Enter player ID"
+                        >
+                    </div>
+
+                    <!-- Date Range Start Field -->
+                    <div class="form-group">
+                        <label class="form-label" for="dateFrom">
+                            Date From
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="date" 
+                            id="dateFrom" 
+                            class="form-input" 
+                            required
+                        >
+                    </div>
+
+                    <!-- Date Range End Field -->
+                    <div class="form-group">
+                        <label class="form-label" for="dateTo">
+                            Date To
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="date" 
+                            id="dateTo" 
+                            class="form-input" 
+                            required
+                        >
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-reset" id="resetBtn">Reset</button>
+                        <button type="submit" class="btn btn-submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Transactions Table -->
+            <div class="table-container" style="margin-top: 40px;">
+                <table>
+                    <thead>
+                        <!-- First Header Row: Group Titles -->
+                        <tr>
+                            <th colspan="3" style="text-align: center; font-weight: 700;"></th>
+                            <th colspan="2" style="text-align: center; font-weight: 700;">Dispersion</th>
+                            <th colspan="2" style="text-align: center; font-weight: 700;">Balance After</th>
+                        </tr>
+                        <!-- Second Header Row: Column Names -->
+                        <tr>
+                            <th>ID</th>
+                            <th class="sortable" data-column="1">Action</th>
+                            <th class="sortable" data-column="2">Source Transaction ID</th>
+                            <th class="sortable" data-column="3">Amount</th>
+                            <th class="sortable" data-column="4">Asset Type</th>
+                            <th class="sortable" data-column="5">Amount</th>
+                            <th class="sortable" data-column="6">Asset Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionsTableBody">
+                        <tr class="transaction-row" data-id="TXN001">
+                            <td><span class="clickable-id"><span class="expand-icon">▶</span><span class="id-text">TXN001</span></span></td>
+                            <td>Debit</td>
+                            <td>ba47fd02-2a40-4352-96c4-a63e09415896</td>
+                            <td>$50.00</td>
+                            <td>Cash</td>
+                            <td>$450.00</td>
+                            <td>Cash</td>
+                        </tr>
+                        <tr class="expandable-row" data-parent="TXN001">
+                            <td colspan="7">
+                                <div class="expandable-content">
+                                    <div class="context-details">
+                                        <div class="context-item">
+                                            <span class="context-label">Game Session ID</span>
+                                            <span class="context-value">GS-001</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Reason</span>
+                                            <span class="context-value">Tournament Registration</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Catalog ID</span>
+                                            <span class="context-value">tourn.59324859843</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Catalog</span>
+                                            <span class="context-value">com.pokerstars.poker.PokercatalogTournament</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="transaction-row" data-id="TXN002">
+                            <td><span class="clickable-id"><span class="expand-icon">▶</span><span class="id-text">TXN002</span></span></td>
+                            <td>Credit</td>
+                            <td>c8e91b3d-5f72-48a9-b123-7d8c4e6f9a0b</td>
+                            <td>$25.00</td>
+                            <td>PSN_Bonus</td>
+                            <td>$475.00</td>
+                            <td>PSN_Bonus</td>
+                        </tr>
+                        <tr class="expandable-row" data-parent="TXN002">
+                            <td colspan="7">
+                                <div class="expandable-content">
+                                    <div class="context-details">
+                                        <div class="context-item">
+                                            <span class="context-label">Game Session ID</span>
+                                            <span class="context-value">GS-002</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Reason</span>
+                                            <span class="context-value">Tournament Final Payout</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Catalog ID</span>
+                                            <span class="context-value">tourn.84756392847</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Catalog</span>
+                                            <span class="context-value">com.pokerstars.poker.PokercatalogTournament</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="transaction-row" data-id="TXN003">
+                            <td><span class="clickable-id"><span class="expand-icon">▶</span><span class="id-text">TXN003</span></span></td>
+                            <td>Debit</td>
+                            <td>d1f8a2c9-6e4b-4d7a-9c3e-1b5f8a2d7c4e</td>
+                            <td>1000</td>
+                            <td>Cash</td>
+                            <td>3750</td>
+                            <td>Cash</td>
+                        </tr>
+                        <tr class="expandable-row" data-parent="TXN003">
+                            <td colspan="7">
+                                <div class="expandable-content">
+                                    <div class="context-details">
+                                        <div class="context-item">
+                                            <span class="context-label">Game Session ID</span>
+                                            <span class="context-value">GS-003</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Reason</span>
+                                            <span class="context-value">Tournament Registration</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Catalog ID</span>
+                                            <span class="context-value">tourn.12345678901</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Catalog</span>
+                                            <span class="context-value">com.pokerstars.poker.PokercatalogTournament</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="transaction-row" data-id="TXN004">
+                            <td><span class="clickable-id"><span class="expand-icon">▶</span><span class="id-text">TXN004</span></span></td>
+                            <td>Credit</td>
+                            <td>3a7c9e4f-8b2d-4e1a-b6f5-9c8d2e7a3b1f</td>
+                            <td>$200.00</td>
+                            <td>PSN_Bonus</td>
+                            <td>$175.00</td>
+                            <td>Cash</td>
+                        </tr>
+                        <tr class="expandable-row" data-parent="TXN004">
+                            <td colspan="7">
+                                <div class="expandable-content">
+                                    <div class="context-details">
+                                        <div class="context-item">
+                                            <span class="context-label">Game Session ID</span>
+                                            <span class="context-value">GS-004</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Reason</span>
+                                            <span class="context-value">Tournament Final Payout</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Catalog ID</span>
+                                            <span class="context-value">tourn.98765432109</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Catalog</span>
+                                            <span class="context-value">com.pokerstars.poker.PokercatalogTournament</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="transaction-row" data-id="TXN005">
+                            <td><span class="clickable-id"><span class="expand-icon">▶</span><span class="id-text">TXN005</span></span></td>
+                            <td>Debit</td>
+                            <td>f2e8b4d6-9c1a-4e7b-a3f5-8d2c6e1b9a4d</td>
+                            <td>$15.00</td>
+                            <td>Cash</td>
+                            <td>$160.00</td>
+                            <td>PSN_Bonus</td>
+                        </tr>
+                        <tr class="expandable-row" data-parent="TXN005">
+                            <td colspan="7">
+                                <div class="expandable-content">
+                                    <div class="context-details">
+                                        <div class="context-item">
+                                            <span class="context-label">Game Session ID</span>
+                                            <span class="context-value">GS-005</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Reason</span>
+                                            <span class="context-value">Tournament Registration</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Catalog ID</span>
+                                            <span class="context-value">tourn.45678901234</span>
+                                        </div>
+                                        <div class="context-item">
+                                            <span class="context-label">Catalog</span>
+                                            <span class="context-value">com.pokerstars.poker.PokercatalogTournament</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Filter Form submission
+        document.getElementById('filterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                playerId: document.getElementById('playerId').value,
+                dateFrom: document.getElementById('dateFrom').value,
+                dateTo: document.getElementById('dateTo').value
+            };
+            
+            console.log('Filter applied:', formData);
+            alert('Filter applied successfully!\nCheck console for details.');
+        });
+
+        // Set default dates
+        const today = new Date().toISOString().split('T')[0];
+        const lastMonth = new Date();
+        lastMonth.setMonth(lastMonth.getMonth() - 1);
+        const lastMonthStr = lastMonth.toISOString().split('T')[0];
+        
+        document.getElementById('dateFrom').value = lastMonthStr;
+        document.getElementById('dateTo').value = today;
+
+        // Reset button
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to reset the form?')) {
+                document.getElementById('filterForm').reset();
+                document.getElementById('dateFrom').value = lastMonthStr;
+                document.getElementById('dateTo').value = today;
+            }
+        });
+
+        // Expandable rows functionality
+        document.querySelectorAll('.clickable-id').forEach(idElement => {
+            idElement.addEventListener('click', function() {
+                const transactionId = this.textContent.trim().replace('▶', '');
+                const expandableRow = document.querySelector(`.expandable-row[data-parent="${transactionId}"]`);
+                const icon = this.querySelector('.expand-icon');
+                
+                if (expandableRow) {
+                    // Toggle the expanded class
+                    expandableRow.classList.toggle('expanded');
+                    icon.classList.toggle('expanded');
+                }
+            });
+        });
+
+        // Sorting functionality
+        const sortableHeaders = document.querySelectorAll('th.sortable');
+        let currentSort = { column: null, direction: null };
+
+        sortableHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                const column = parseInt(this.getAttribute('data-column'));
+                const tbody = document.getElementById('transactionsTableBody');
+                const rows = Array.from(tbody.querySelectorAll('tr.transaction-row'));
+                
+                // Determine sort direction
+                let direction = 'asc';
+                if (currentSort.column === column && currentSort.direction === 'asc') {
+                    direction = 'desc';
+                }
+                
+                // Remove sorting classes from all headers
+                sortableHeaders.forEach(h => h.classList.remove('asc', 'desc'));
+                
+                // Add sorting class to current header
+                this.classList.add(direction);
+                
+                // Sort rows
+                rows.sort((a, b) => {
+                    const aValue = a.cells[column].textContent.trim();
+                    const bValue = b.cells[column].textContent.trim();
+                    
+                    if (direction === 'asc') {
+                        return aValue.localeCompare(bValue);
+                    } else {
+                        return bValue.localeCompare(aValue);
+                    }
+                });
+                
+                // Clear and repopulate tbody with sorted transaction rows and their expandable rows
+                tbody.innerHTML = '';
+                rows.forEach(row => {
+                    const transactionId = row.getAttribute('data-id');
+                    const expandableRow = document.querySelector(`.expandable-row[data-parent="${transactionId}"]`);
+                    tbody.appendChild(row);
+                    if (expandableRow) {
+                        tbody.appendChild(expandableRow);
+                    }
+                });
+                
+                // Update current sort state
+                currentSort = { column, direction };
+            });
+        });
+    </script>
+</body>
+</html>

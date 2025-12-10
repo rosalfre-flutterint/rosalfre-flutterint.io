@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Seeding - Wireframe</title>
+    <link href="https://cdn.jsdelivr.net/npm/@mantine/core@7.3.2/styles.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #e0e0e0;
+            padding: 20px;
+            border-right: 1px solid #c0c0c0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            background-color: #d0d0d0;
+            border: 1px solid #999;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            background-color: #c0c0c0;
+        }
+
+        .nav-link.active {
+            background-color: #888;
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 40px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 24px;
+            border: 1px solid #ccc;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .chat-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 160px);
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #d0d0d0;
+            background: #e0e0e0;
+        }
+
+        .chat-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            max-width: 80%;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message.assistant {
+            align-self: flex-start;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #d0d0d0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: #888;
+            color: white;
+        }
+
+        .message-content {
+            background: #f5f5f5;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .message.user .message-content {
+            background: #d0d0d0;
+            border: 1px solid #c0c0c0;
+        }
+
+        .message-text {
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            border-top: 1px solid #d0d0d0;
+            background: white;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #c0c0c0;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: none;
+            min-height: 44px;
+            max-height: 120px;
+            background: #f5f5f5;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #888;
+        }
+
+        .btn-send {
+            padding: 12px 24px;
+            background: #888;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-send:hover {
+            background: #666;
+        }
+
+        .btn-send:disabled {
+            background: #c0c0c0;
+            cursor: not-allowed;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #666;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .empty-state-subtext {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .typing-indicator {
+            display: none;
+            gap: 4px;
+            padding: 12px 16px;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #888;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-8px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #c0c0c0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px 16px;
+            }
+
+            .chat-container {
+                height: calc(100vh - 120px);
+            }
+
+            .message {
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo" title="PSN Emulator">♠</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="player-account.html" class="nav-link">Player Account</a>
+                </li>
+                <li class="nav-item">
+                    <a href="transactions.html" class="nav-link">Transactions</a>
+                </li>
+                <li class="nav-item">
+                    <a href="data-seeding.html" class="nav-link active">Data Seeding</a>
+                </li>
+                <li class="nav-item">
+                    <a href="partner-notification.html" class="nav-link">Partner Notification</a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Data Seeding</h1>
+                <p class="page-subtitle">AI-powered data seeding and test scenario generation</p>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2>AI Assistant</h2>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💬</div>
+                        <div class="empty-state-text">Start a conversation</div>
+                        <div class="empty-state-subtext">Ask me to seed data or help with testing scenarios</div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <div class="chat-input-wrapper">
+                        <textarea 
+                            id="chatInput" 
+                            class="chat-input" 
+                            placeholder="Type your message..."
+                            rows="1"
+                        ></textarea>
+                        <button id="sendButton" class="btn-send">Send</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendButton = document.getElementById('sendButton');
+
+        // Auto-resize textarea
+        chatInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // Send message on Enter (Shift+Enter for new line)
+        chatInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        sendButton.addEventListener('click', sendMessage);
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Remove empty state if exists
+            const emptyState = chatMessages.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.remove();
+            }
+
+            // Add user message
+            addMessage(message, 'user');
+            
+            // Clear input
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+
+            // Disable input while processing
+            chatInput.disabled = true;
+            sendButton.disabled = true;
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Simulate AI response
+            setTimeout(() => {
+                hideTypingIndicator();
+                addMessage(getAIResponse(message), 'assistant');
+                chatInput.disabled = false;
+                sendButton.disabled = false;
+                chatInput.focus();
+            }, 1500 + Math.random() * 1000);
+        }
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = sender === 'user' ? '👤' : '🤖';
+
+            const content = document.createElement('div');
+            content.className = 'message-content';
+
+            const messageText = document.createElement('div');
+            messageText.className = 'message-text';
+            messageText.textContent = text;
+
+            const time = document.createElement('div');
+            time.className = 'message-time';
+            time.textContent = new Date().toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+
+            content.appendChild(messageText);
+            content.appendChild(time);
+
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const indicator = document.createElement('div');
+            indicator.className = 'message assistant';
+            indicator.id = 'typingIndicator';
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = '🤖';
+
+            const content = document.createElement('div');
+            content.className = 'message-content';
+
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator active';
+            typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+
+            content.appendChild(typingDiv);
+            indicator.appendChild(avatar);
+            indicator.appendChild(content);
+
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function getAIResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            if (lowerMessage.includes('seed') || lowerMessage.includes('create') || lowerMessage.includes('generate')) {
+                return 'I can help you seed test data. What type of data would you like to create? (e.g., players, transactions, accounts)';
+            } else if (lowerMessage.includes('player')) {
+                return 'I\'ll create sample player accounts. How many players would you like me to generate?';
+            } else if (lowerMessage.includes('transaction')) {
+                return 'I can generate transaction records. Please specify the number of transactions and date range.';
+            } else if (lowerMessage.includes('help')) {
+                return 'I can assist with data seeding operations including creating players, transactions, and test scenarios. Just let me know what you need!';
+            } else {
+                return 'I understand. How can I assist you with data seeding?';
+            }
+        }
+    </script>
+</body>
+</html>

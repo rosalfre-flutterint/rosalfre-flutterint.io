@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Account - Wireframe</title>
+    
+    <!-- Mantine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/@mantine/core@7.3.2/styles.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: #e0e0e0;
+            border-right: 1px solid #999;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            background-color: #d0d0d0;
+            border: 1px solid #999;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            background-color: #c0c0c0;
+        }
+
+        .nav-link.active {
+            background-color: #888;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 24px;
+            border: 1px solid #ccc;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .section {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 30px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+            color: #333;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #999;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #999;
+            font-size: 13px;
+        }
+
+        th {
+            background-color: #d0d0d0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+
+        tbody tr:hover {
+            background-color: #e8e8e8;
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .form-label .required {
+            color: #666;
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 1px solid #999;
+            background-color: #ffffff;
+            color: #333;
+            outline: none;
+            transition: all 0.2s;
+            appearance: none;
+            font-family: inherit;
+        }
+
+        .form-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: #666;
+            box-shadow: 0 0 0 2px rgba(102, 102, 102, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            padding-top: 24px;
+            border-top: 1px solid #ddd;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #999;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .btn-reset {
+            background-color: #d0d0d0;
+            color: #333;
+        }
+
+        .btn-reset:hover {
+            background-color: #c0c0c0;
+        }
+
+        .btn-submit {
+            background-color: #888;
+            color: white;
+            border-color: #666;
+        }
+
+        .btn-submit:hover {
+            background-color: #777;
+        }
+
+        .btn-action {
+            padding: 8px 16px;
+            font-size: 12px;
+            background-color: #888;
+            color: white;
+            border: 1px solid #666;
+        }
+
+        .btn-action:hover {
+            background-color: #777;
+        }
+
+        .btn-secondary {
+            padding: 8px 16px;
+            font-size: 12px;
+            background-color: #d0d0d0;
+            color: #333;
+            border: 1px solid #999;
+        }
+
+        .btn-secondary:hover {
+            background-color: #c0c0c0;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border: 2px solid #999;
+            width: 100%;
+            max-width: 900px;
+            margin: 20px auto;
+        }
+
+        .modal-header {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+            color: #333;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #ddd;
+        }
+
+        .subsection-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Array Entry Styles */
+        .array-entries {
+            margin-bottom: 20px;
+        }
+
+        .array-entry {
+            padding: 16px;
+            border: 1px solid #ccc;
+            background-color: #fafafa;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .array-entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .array-entry-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .btn-remove {
+            padding: 6px 12px;
+            font-size: 12px;
+            background-color: #d0d0d0;
+            color: #333;
+            border: 1px solid #999;
+            cursor: pointer;
+        }
+
+        .btn-remove:hover {
+            background-color: #c0c0c0;
+        }
+
+        .btn-add {
+            margin-top: 12px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions,
+            .modal-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 60px;
+                padding: 10px;
+            }
+
+            .main-content {
+                margin-left: 60px;
+                padding: 15px;
+            }
+
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .nav-link {
+                font-size: 10px;
+                padding: 8px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="logo" title="PSN Emulator">♠</div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="player-account.html" class="nav-link active">Player Account</a>
+            </li>
+            <li class="nav-item">
+                <a href="transactions.html" class="nav-link">Transactions</a>
+            </li>
+            <li class="nav-item">
+                <a href="data-seeding.html" class="nav-link">Data Seeding</a>
+            </li>
+            <li class="nav-item">
+                <a href="partner-notification.html" class="nav-link">Partner Notification</a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Player Account</h1>
+            <p class="page-subtitle">Manage player accounts and settings</p>
+        </div>
+
+        <!-- Section: Account Viewing and Filtering -->
+        <section class="section">
+            <h2 class="section-title">Account Viewing and Filtering</h2>
+
+            <!-- Accounts Table -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Jurisdiction</th>
+                            <th>Brand</th>
+                            <th>Given Name</th>
+                            <th>Family Name</th>
+                            <th>Email</th>
+                            <th>Birth Date</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody id="accountsTableBody">
+                        <tr>
+                            <td>be710823-1016-4d43-a002-33ee73e64b8f</td>
+                            <td>IT</td>
+                            <td>SISAL</td>
+                            <td>Jack</td>
+                            <td>Foo</td>
+                            <td>foobar@email.com</td>
+                            <td>03/11/1970</td>
+                            <td>
+                                <button class="btn btn-action edit-btn" onclick="openEditModal(0)">Edit</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>a8920d12-7c45-4e32-b154-89f4e52c1f3a</td>
+                            <td>DE</td>
+                            <td>BetCo</td>
+                            <td>Anna</td>
+                            <td>Schmidt</td>
+                            <td>anna.schmidt@email.com</td>
+                            <td>15/05/1985</td>
+                            <td>
+                                <button class="btn btn-action edit-btn" onclick="openEditModal(1)">Edit</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>c5f3a789-2e41-4b9f-8d67-12ab3c456def</td>
+                            <td>FR</td>
+                            <td>ParisGaming</td>
+                            <td>Pierre</td>
+                            <td>Dubois</td>
+                            <td>pierre.dubois@email.com</td>
+                            <td>22/08/1992</td>
+                            <td>
+                                <button class="btn btn-action edit-btn" onclick="openEditModal(2)">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Create Player -->
+        <section class="section">
+            <h2 class="section-title">Create Player</h2>
+
+            <form id="createForm">
+                <!-- Basic Information -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="createJurisdiction">
+                            Jurisdiction
+                            <span class="required">*</span>
+                        </label>
+                        <select id="createJurisdiction" class="form-select" required>
+                            <option value="">Select Jurisdiction</option>
+                            <option value="IT">IT</option>
+                            <option value="ES">ES</option>
+                            <option value="FR">FR</option>
+                            <option value="PT">PT</option>
+                            <option value="BE">BE</option>
+                            <option value="DE">DE</option>
+                            <option value="BG">BG</option>
+                            <option value="GR">GR</option>
+                            <option value="SE">SE</option>
+                            <option value="DK">DK</option>
+                            <option value="RO">RO</option>
+                            <option value="CH">CH</option>
+                            <option value="NL">NL</option>
+                            <option value="UK">UK</option>
+                            <option value="CZ">CZ</option>
+                            <option value="IN">IN</option>
+                            <option value="EE">EE</option>
+                            <option value="ARBA">ARBA</option>
+                            <option value="CAON">CAON</option>
+                            <option value="INTERNATIONAL">INTERNATIONAL</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createBrand">
+                            Brand
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createBrand" 
+                            class="form-input" 
+                            placeholder="Enter brand"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createPreferredCurrency">
+                            Preferred Currency
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createPreferredCurrency" 
+                            class="form-input" 
+                            placeholder="e.g., EUR, USD"
+                        >
+                    </div>
+                </div>
+
+                <!-- Identifiers -->
+                <h3 class="subsection-title">Identifiers</h3>
+                <div id="createIdentifiers" class="array-entries"></div>
+                <button type="button" class="btn btn-secondary btn-add" onclick="addCreateIdentifier()">Add Identifier</button>
+
+                <!-- Flags -->
+                <h3 class="subsection-title">Flags</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="createFlags">
+                            Flags
+                        </label>
+                        <select id="createFlags" class="form-select">
+                            <option value="">Select Flag</option>
+                            <option value="VIP">VIP</option>
+                            <option value="MARKETING_COMMUNICATIONS">MARKETING_COMMUNICATIONS</option>
+                            <option value="BLOCK_IN_CLIENT_MARKETING">BLOCK_IN_CLIENT_MARKETING</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Restrictions -->
+                <h3 class="subsection-title">Restrictions</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="createRestrictions">
+                            Restrictions
+                        </label>
+                        <select id="createRestrictions" class="form-select">
+                            <option value="">Select Restriction</option>
+                            <option value="SELF_EXCLUDED">SELF_EXCLUDED</option>
+                            <option value="BANNED_BY_REGULATOR">BANNED_BY_REGULATOR</option>
+                            <option value="RESTRICTED_ACCESS">RESTRICTED_ACCESS</option>
+                            <option value="DENY_SHARED_LIQUIDITY">DENY_SHARED_LIQUIDITY</option>
+                            <option value="LOGIN_ONLY">LOGIN_ONLY</option>
+                            <option value="TEMPORARY_CLOSED">TEMPORARY_CLOSED</option>
+                            <option value="CLOSED">CLOSED</option>
+                            <option value="ANONYMIZED">ANONYMIZED</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Personal Data - Name -->
+                <h3 class="subsection-title">Personal Data - Name</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="createGivenName">
+                            Given Name
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createGivenName" 
+                            class="form-input" 
+                            placeholder="Enter given name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createFamilyName">
+                            Family Name
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createFamilyName" 
+                            class="form-input" 
+                            placeholder="Enter family name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createAdditionalName">
+                            Additional Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createAdditionalName" 
+                            class="form-input" 
+                            placeholder="Enter additional name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createPrefix">
+                            Prefix
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createPrefix" 
+                            class="form-input" 
+                            placeholder="e.g., Dr, Mr, Mrs"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createSuffix">
+                            Suffix
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createSuffix" 
+                            class="form-input" 
+                            placeholder="e.g., PhD, Jr"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createSecondFamily">
+                            Second Family Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createSecondFamily" 
+                            class="form-input" 
+                            placeholder="Enter second family name"
+                        >
+                    </div>
+                </div>
+
+                <!-- Personal Data - Basic Info -->
+                <h3 class="subsection-title">Personal Data - Basic Information</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="createGender">
+                            Gender
+                            <span class="required">*</span>
+                        </label>
+                        <select id="createGender" class="form-select" required>
+                            <option value="">Select Gender</option>
+                            <option value="MALE">MALE</option>
+                            <option value="FEMALE">FEMALE</option>
+                            <option value="X">X</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createBirthDate">
+                            Birth Date (dd/MM/yyyy)
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createBirthDate" 
+                            class="form-input" 
+                            placeholder="dd/MM/yyyy"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createLocale">
+                            Locale
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createLocale" 
+                            class="form-input" 
+                            placeholder="e.g., en-US, it-IT"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createNationality">
+                            Nationality
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createNationality" 
+                            class="form-input" 
+                            placeholder="ISO 3166-1 code"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createEmail">
+                            Email
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="createEmail" 
+                            class="form-input" 
+                            placeholder="Enter email address"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Personal Data - Telephone Numbers -->
+                <h3 class="subsection-title">Personal Data - Telephone Numbers</h3>
+                <div id="createTelephones" class="array-entries"></div>
+                <button type="button" class="btn btn-secondary btn-add" onclick="addCreateTelephone()">Add Telephone Number</button>
+
+                <!-- Personal Data - Address -->
+                <h3 class="subsection-title">Personal Data - Address</h3>
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 30px;">
+                    <div class="form-group">
+                        <label class="form-label" for="createCountry">
+                            Country
+                            <span class="required">*</span>
+                        </label>
+                        <select id="createCountry" class="form-select" required>
+                            <option value="">Select Country</option>
+                            <option value="AF">Afghanistan</option>
+                            <option value="AL">Albania</option>
+                            <option value="DZ">Algeria</option>
+                            <option value="AD">Andorra</option>
+                            <option value="AO">Angola</option>
+                            <option value="AR">Argentina</option>
+                            <option value="AM">Armenia</option>
+                            <option value="AU">Australia</option>
+                            <option value="AT">Austria</option>
+                            <option value="AZ">Azerbaijan</option>
+                            <option value="BS">Bahamas</option>
+                            <option value="BH">Bahrain</option>
+                            <option value="BD">Bangladesh</option>
+                            <option value="BB">Barbados</option>
+                            <option value="BY">Belarus</option>
+                            <option value="BE">Belgium</option>
+                            <option value="BZ">Belize</option>
+                            <option value="BJ">Benin</option>
+                            <option value="BT">Bhutan</option>
+                            <option value="BO">Bolivia</option>
+                            <option value="BA">Bosnia and Herzegovina</option>
+                            <option value="BW">Botswana</option>
+                            <option value="BR">Brazil</option>
+                            <option value="BN">Brunei</option>
+                            <option value="BG">Bulgaria</option>
+                            <option value="BF">Burkina Faso</option>
+                            <option value="BI">Burundi</option>
+                            <option value="KH">Cambodia</option>
+                            <option value="CM">Cameroon</option>
+                            <option value="CA">Canada</option>
+                            <option value="CV">Cape Verde</option>
+                            <option value="CF">Central African Republic</option>
+                            <option value="TD">Chad</option>
+                            <option value="CL">Chile</option>
+                            <option value="CN">China</option>
+                            <option value="CO">Colombia</option>
+                            <option value="KM">Comoros</option>
+                            <option value="CG">Congo</option>
+                            <option value="CR">Costa Rica</option>
+                            <option value="HR">Croatia</option>
+                            <option value="CU">Cuba</option>
+                            <option value="CY">Cyprus</option>
+                            <option value="CZ">Czech Republic</option>
+                            <option value="DK">Denmark</option>
+                            <option value="DJ">Djibouti</option>
+                            <option value="DM">Dominica</option>
+                            <option value="DO">Dominican Republic</option>
+                            <option value="EC">Ecuador</option>
+                            <option value="EG">Egypt</option>
+                            <option value="SV">El Salvador</option>
+                            <option value="GQ">Equatorial Guinea</option>
+                            <option value="ER">Eritrea</option>
+                            <option value="EE">Estonia</option>
+                            <option value="ET">Ethiopia</option>
+                            <option value="FJ">Fiji</option>
+                            <option value="FI">Finland</option>
+                            <option value="FR">France</option>
+                            <option value="GA">Gabon</option>
+                            <option value="GM">Gambia</option>
+                            <option value="GE">Georgia</option>
+                            <option value="DE">Germany</option>
+                            <option value="GH">Ghana</option>
+                            <option value="GR">Greece</option>
+                            <option value="GD">Grenada</option>
+                            <option value="GT">Guatemala</option>
+                            <option value="GN">Guinea</option>
+                            <option value="GW">Guinea-Bissau</option>
+                            <option value="GY">Guyana</option>
+                            <option value="HT">Haiti</option>
+                            <option value="HN">Honduras</option>
+                            <option value="HU">Hungary</option>
+                            <option value="IS">Iceland</option>
+                            <option value="IN">India</option>
+                            <option value="ID">Indonesia</option>
+                            <option value="IR">Iran</option>
+                            <option value="IQ">Iraq</option>
+                            <option value="IE">Ireland</option>
+                            <option value="IL">Israel</option>
+                            <option value="IT">Italy</option>
+                            <option value="JM">Jamaica</option>
+                            <option value="JP">Japan</option>
+                            <option value="JO">Jordan</option>
+                            <option value="KZ">Kazakhstan</option>
+                            <option value="KE">Kenya</option>
+                            <option value="KI">Kiribati</option>
+                            <option value="KP">Korea, North</option>
+                            <option value="KR">Korea, South</option>
+                            <option value="KW">Kuwait</option>
+                            <option value="KG">Kyrgyzstan</option>
+                            <option value="LA">Laos</option>
+                            <option value="LV">Latvia</option>
+                            <option value="LB">Lebanon</option>
+                            <option value="LS">Lesotho</option>
+                            <option value="LR">Liberia</option>
+                            <option value="LY">Libya</option>
+                            <option value="LI">Liechtenstein</option>
+                            <option value="LT">Lithuania</option>
+                            <option value="LU">Luxembourg</option>
+                            <option value="MK">Macedonia</option>
+                            <option value="MG">Madagascar</option>
+                            <option value="MW">Malawi</option>
+                            <option value="MY">Malaysia</option>
+                            <option value="MV">Maldives</option>
+                            <option value="ML">Mali</option>
+                            <option value="MT">Malta</option>
+                            <option value="MH">Marshall Islands</option>
+                            <option value="MR">Mauritania</option>
+                            <option value="MU">Mauritius</option>
+                            <option value="MX">Mexico</option>
+                            <option value="FM">Micronesia</option>
+                            <option value="MD">Moldova</option>
+                            <option value="MC">Monaco</option>
+                            <option value="MN">Mongolia</option>
+                            <option value="ME">Montenegro</option>
+                            <option value="MA">Morocco</option>
+                            <option value="MZ">Mozambique</option>
+                            <option value="MM">Myanmar</option>
+                            <option value="NA">Namibia</option>
+                            <option value="NR">Nauru</option>
+                            <option value="NP">Nepal</option>
+                            <option value="NL">Netherlands</option>
+                            <option value="NZ">New Zealand</option>
+                            <option value="NI">Nicaragua</option>
+                            <option value="NE">Niger</option>
+                            <option value="NG">Nigeria</option>
+                            <option value="NO">Norway</option>
+                            <option value="OM">Oman</option>
+                            <option value="PK">Pakistan</option>
+                            <option value="PW">Palau</option>
+                            <option value="PA">Panama</option>
+                            <option value="PG">Papua New Guinea</option>
+                            <option value="PY">Paraguay</option>
+                            <option value="PE">Peru</option>
+                            <option value="PH">Philippines</option>
+                            <option value="PL">Poland</option>
+                            <option value="PT">Portugal</option>
+                            <option value="QA">Qatar</option>
+                            <option value="RO">Romania</option>
+                            <option value="RU">Russia</option>
+                            <option value="RW">Rwanda</option>
+                            <option value="KN">Saint Kitts and Nevis</option>
+                            <option value="LC">Saint Lucia</option>
+                            <option value="VC">Saint Vincent and the Grenadines</option>
+                            <option value="WS">Samoa</option>
+                            <option value="SM">San Marino</option>
+                            <option value="ST">Sao Tome and Principe</option>
+                            <option value="SA">Saudi Arabia</option>
+                            <option value="SN">Senegal</option>
+                            <option value="RS">Serbia</option>
+                            <option value="SC">Seychelles</option>
+                            <option value="SL">Sierra Leone</option>
+                            <option value="SG">Singapore</option>
+                            <option value="SK">Slovakia</option>
+                            <option value="SI">Slovenia</option>
+                            <option value="SB">Solomon Islands</option>
+                            <option value="SO">Somalia</option>
+                            <option value="ZA">South Africa</option>
+                            <option value="SS">South Sudan</option>
+                            <option value="ES">Spain</option>
+                            <option value="LK">Sri Lanka</option>
+                            <option value="SD">Sudan</option>
+                            <option value="SR">Suriname</option>
+                            <option value="SZ">Swaziland</option>
+                            <option value="SE">Sweden</option>
+                            <option value="CH">Switzerland</option>
+                            <option value="SY">Syria</option>
+                            <option value="TW">Taiwan</option>
+                            <option value="TJ">Tajikistan</option>
+                            <option value="TZ">Tanzania</option>
+                            <option value="TH">Thailand</option>
+                            <option value="TL">Timor-Leste</option>
+                            <option value="TG">Togo</option>
+                            <option value="TO">Tonga</option>
+                            <option value="TT">Trinidad and Tobago</option>
+                            <option value="TN">Tunisia</option>
+                            <option value="TR">Turkey</option>
+                            <option value="TM">Turkmenistan</option>
+                            <option value="TV">Tuvalu</option>
+                            <option value="UG">Uganda</option>
+                            <option value="UA">Ukraine</option>
+                            <option value="AE">United Arab Emirates</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="US">United States</option>
+                            <option value="UY">Uruguay</option>
+                            <option value="UZ">Uzbekistan</option>
+                            <option value="VU">Vanuatu</option>
+                            <option value="VA">Vatican City</option>
+                            <option value="VE">Venezuela</option>
+                            <option value="VN">Vietnam</option>
+                            <option value="YE">Yemen</option>
+                            <option value="ZM">Zambia</option>
+                            <option value="ZW">Zimbabwe</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createRegion">
+                            Region
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createRegion" 
+                            class="form-input" 
+                            placeholder="Enter region"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createLocality">
+                            Locality
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createLocality" 
+                            class="form-input" 
+                            placeholder="Enter locality"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createStreetAddress">
+                            Street Address
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createStreetAddress" 
+                            class="form-input" 
+                            placeholder="Enter street address"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="createPostalCode">
+                            Postal Code
+                        </label>
+                        <input 
+                            type="text" 
+                            id="createPostalCode" 
+                            class="form-input" 
+                            placeholder="Enter postal code"
+                        >
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-reset" id="resetBtn">Reset</button>
+                    <button type="submit" class="btn btn-submit">Submit</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">Edit Player Account</h2>
+            <form id="editForm">
+                <!-- Basic Information -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="editJurisdiction">
+                            Jurisdiction
+                            <span class="required">*</span>
+                        </label>
+                        <select id="editJurisdiction" class="form-select" required>
+                            <option value="">Select Jurisdiction</option>
+                            <option value="IT">IT</option>
+                            <option value="ES">ES</option>
+                            <option value="FR">FR</option>
+                            <option value="PT">PT</option>
+                            <option value="BE">BE</option>
+                            <option value="DE">DE</option>
+                            <option value="BG">BG</option>
+                            <option value="GR">GR</option>
+                            <option value="SE">SE</option>
+                            <option value="DK">DK</option>
+                            <option value="RO">RO</option>
+                            <option value="CH">CH</option>
+                            <option value="NL">NL</option>
+                            <option value="UK">UK</option>
+                            <option value="CZ">CZ</option>
+                            <option value="IN">IN</option>
+                            <option value="EE">EE</option>
+                            <option value="ARBA">ARBA</option>
+                            <option value="CAON">CAON</option>
+                            <option value="INTERNATIONAL">INTERNATIONAL</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editBrand">
+                            Brand
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editBrand" 
+                            class="form-input" 
+                            placeholder="Enter brand"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editPreferredCurrency">
+                            Preferred Currency
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editPreferredCurrency" 
+                            class="form-input" 
+                            placeholder="e.g., EUR, USD"
+                        >
+                    </div>
+                </div>
+
+                <!-- Identifiers -->
+                <h3 class="subsection-title">Identifiers</h3>
+                <div id="editIdentifiers" class="array-entries"></div>
+                <button type="button" class="btn btn-secondary btn-add" onclick="addEditIdentifier()">Add Identifier</button>
+
+                <!-- Flags -->
+                <h3 class="subsection-title">Flags</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="editFlags">
+                            Flags
+                        </label>
+                        <select id="editFlags" class="form-select">
+                            <option value="">Select Flag</option>
+                            <option value="VIP">VIP</option>
+                            <option value="MARKETING_COMMUNICATIONS">MARKETING_COMMUNICATIONS</option>
+                            <option value="BLOCK_IN_CLIENT_MARKETING">BLOCK_IN_CLIENT_MARKETING</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Restrictions -->
+                <h3 class="subsection-title">Restrictions</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="editRestrictions">
+                            Restrictions
+                        </label>
+                        <select id="editRestrictions" class="form-select">
+                            <option value="">Select Restriction</option>
+                            <option value="SELF_EXCLUDED">SELF_EXCLUDED</option>
+                            <option value="BANNED_BY_REGULATOR">BANNED_BY_REGULATOR</option>
+                            <option value="RESTRICTED_ACCESS">RESTRICTED_ACCESS</option>
+                            <option value="DENY_SHARED_LIQUIDITY">DENY_SHARED_LIQUIDITY</option>
+                            <option value="LOGIN_ONLY">LOGIN_ONLY</option>
+                            <option value="TEMPORARY_CLOSED">TEMPORARY_CLOSED</option>
+                            <option value="CLOSED">CLOSED</option>
+                            <option value="ANONYMIZED">ANONYMIZED</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Personal Data - Name -->
+                <h3 class="subsection-title">Personal Data - Name</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="editGivenName">
+                            Given Name
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editGivenName" 
+                            class="form-input" 
+                            placeholder="Enter given name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editFamilyName">
+                            Family Name
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editFamilyName" 
+                            class="form-input" 
+                            placeholder="Enter family name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editAdditionalName">
+                            Additional Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editAdditionalName" 
+                            class="form-input" 
+                            placeholder="Enter additional name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editPrefix">
+                            Prefix
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editPrefix" 
+                            class="form-input" 
+                            placeholder="e.g., Dr, Mr, Mrs"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editSuffix">
+                            Suffix
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editSuffix" 
+                            class="form-input" 
+                            placeholder="e.g., PhD, Jr"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editSecondFamily">
+                            Second Family Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editSecondFamily" 
+                            class="form-input" 
+                            placeholder="Enter second family name"
+                        >
+                    </div>
+                </div>
+
+                <!-- Personal Data - Basic Info -->
+                <h3 class="subsection-title">Personal Data - Basic Information</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="editGender">
+                            Gender
+                            <span class="required">*</span>
+                        </label>
+                        <select id="editGender" class="form-select" required>
+                            <option value="">Select Gender</option>
+                            <option value="MALE">MALE</option>
+                            <option value="FEMALE">FEMALE</option>
+                            <option value="X">X</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editBirthDate">
+                            Birth Date (dd/MM/yyyy)
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editBirthDate" 
+                            class="form-input" 
+                            placeholder="dd/MM/yyyy"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editLocale">
+                            Locale
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editLocale" 
+                            class="form-input" 
+                            placeholder="e.g., en-US, it-IT"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editNationality">
+                            Nationality
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editNationality" 
+                            class="form-input" 
+                            placeholder="ISO 3166-1 code"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editEmail">
+                            Email
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="editEmail" 
+                            class="form-input" 
+                            placeholder="Enter email address"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Personal Data - Telephone Numbers -->
+                <h3 class="subsection-title">Personal Data - Telephone Numbers</h3>
+                <div id="editTelephones" class="array-entries"></div>
+                <button type="button" class="btn btn-secondary btn-add" onclick="addEditTelephone()">Add Telephone Number</button>
+
+                <!-- Personal Data - Address -->
+                <h3 class="subsection-title">Personal Data - Address</h3>
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 30px;">
+                    <div class="form-group">
+                        <label class="form-label" for="editCountry">
+                            Country
+                            <span class="required">*</span>
+                        </label>
+                        <select id="editCountry" class="form-select" required>
+                            <option value="">Select Country</option>
+                            <option value="AF">Afghanistan</option>
+                            <option value="AL">Albania</option>
+                            <option value="DZ">Algeria</option>
+                            <option value="AD">Andorra</option>
+                            <option value="AO">Angola</option>
+                            <option value="AR">Argentina</option>
+                            <option value="AM">Armenia</option>
+                            <option value="AU">Australia</option>
+                            <option value="AT">Austria</option>
+                            <option value="AZ">Azerbaijan</option>
+                            <option value="BS">Bahamas</option>
+                            <option value="BH">Bahrain</option>
+                            <option value="BD">Bangladesh</option>
+                            <option value="BB">Barbados</option>
+                            <option value="BY">Belarus</option>
+                            <option value="BE">Belgium</option>
+                            <option value="BZ">Belize</option>
+                            <option value="BJ">Benin</option>
+                            <option value="BT">Bhutan</option>
+                            <option value="BO">Bolivia</option>
+                            <option value="BA">Bosnia and Herzegovina</option>
+                            <option value="BW">Botswana</option>
+                            <option value="BR">Brazil</option>
+                            <option value="BN">Brunei</option>
+                            <option value="BG">Bulgaria</option>
+                            <option value="BF">Burkina Faso</option>
+                            <option value="BI">Burundi</option>
+                            <option value="KH">Cambodia</option>
+                            <option value="CM">Cameroon</option>
+                            <option value="CA">Canada</option>
+                            <option value="CV">Cape Verde</option>
+                            <option value="CF">Central African Republic</option>
+                            <option value="TD">Chad</option>
+                            <option value="CL">Chile</option>
+                            <option value="CN">China</option>
+                            <option value="CO">Colombia</option>
+                            <option value="KM">Comoros</option>
+                            <option value="CG">Congo</option>
+                            <option value="CR">Costa Rica</option>
+                            <option value="HR">Croatia</option>
+                            <option value="CU">Cuba</option>
+                            <option value="CY">Cyprus</option>
+                            <option value="CZ">Czech Republic</option>
+                            <option value="DK">Denmark</option>
+                            <option value="DJ">Djibouti</option>
+                            <option value="DM">Dominica</option>
+                            <option value="DO">Dominican Republic</option>
+                            <option value="EC">Ecuador</option>
+                            <option value="EG">Egypt</option>
+                            <option value="SV">El Salvador</option>
+                            <option value="GQ">Equatorial Guinea</option>
+                            <option value="ER">Eritrea</option>
+                            <option value="EE">Estonia</option>
+                            <option value="ET">Ethiopia</option>
+                            <option value="FJ">Fiji</option>
+                            <option value="FI">Finland</option>
+                            <option value="FR">France</option>
+                            <option value="GA">Gabon</option>
+                            <option value="GM">Gambia</option>
+                            <option value="GE">Georgia</option>
+                            <option value="DE">Germany</option>
+                            <option value="GH">Ghana</option>
+                            <option value="GR">Greece</option>
+                            <option value="GD">Grenada</option>
+                            <option value="GT">Guatemala</option>
+                            <option value="GN">Guinea</option>
+                            <option value="GW">Guinea-Bissau</option>
+                            <option value="GY">Guyana</option>
+                            <option value="HT">Haiti</option>
+                            <option value="HN">Honduras</option>
+                            <option value="HU">Hungary</option>
+                            <option value="IS">Iceland</option>
+                            <option value="IN">India</option>
+                            <option value="ID">Indonesia</option>
+                            <option value="IR">Iran</option>
+                            <option value="IQ">Iraq</option>
+                            <option value="IE">Ireland</option>
+                            <option value="IL">Israel</option>
+                            <option value="IT">Italy</option>
+                            <option value="JM">Jamaica</option>
+                            <option value="JP">Japan</option>
+                            <option value="JO">Jordan</option>
+                            <option value="KZ">Kazakhstan</option>
+                            <option value="KE">Kenya</option>
+                            <option value="KI">Kiribati</option>
+                            <option value="KP">Korea, North</option>
+                            <option value="KR">Korea, South</option>
+                            <option value="KW">Kuwait</option>
+                            <option value="KG">Kyrgyzstan</option>
+                            <option value="LA">Laos</option>
+                            <option value="LV">Latvia</option>
+                            <option value="LB">Lebanon</option>
+                            <option value="LS">Lesotho</option>
+                            <option value="LR">Liberia</option>
+                            <option value="LY">Libya</option>
+                            <option value="LI">Liechtenstein</option>
+                            <option value="LT">Lithuania</option>
+                            <option value="LU">Luxembourg</option>
+                            <option value="MK">Macedonia</option>
+                            <option value="MG">Madagascar</option>
+                            <option value="MW">Malawi</option>
+                            <option value="MY">Malaysia</option>
+                            <option value="MV">Maldives</option>
+                            <option value="ML">Mali</option>
+                            <option value="MT">Malta</option>
+                            <option value="MH">Marshall Islands</option>
+                            <option value="MR">Mauritania</option>
+                            <option value="MU">Mauritius</option>
+                            <option value="MX">Mexico</option>
+                            <option value="FM">Micronesia</option>
+                            <option value="MD">Moldova</option>
+                            <option value="MC">Monaco</option>
+                            <option value="MN">Mongolia</option>
+                            <option value="ME">Montenegro</option>
+                            <option value="MA">Morocco</option>
+                            <option value="MZ">Mozambique</option>
+                            <option value="MM">Myanmar</option>
+                            <option value="NA">Namibia</option>
+                            <option value="NR">Nauru</option>
+                            <option value="NP">Nepal</option>
+                            <option value="NL">Netherlands</option>
+                            <option value="NZ">New Zealand</option>
+                            <option value="NI">Nicaragua</option>
+                            <option value="NE">Niger</option>
+                            <option value="NG">Nigeria</option>
+                            <option value="NO">Norway</option>
+                            <option value="OM">Oman</option>
+                            <option value="PK">Pakistan</option>
+                            <option value="PW">Palau</option>
+                            <option value="PA">Panama</option>
+                            <option value="PG">Papua New Guinea</option>
+                            <option value="PY">Paraguay</option>
+                            <option value="PE">Peru</option>
+                            <option value="PH">Philippines</option>
+                            <option value="PL">Poland</option>
+                            <option value="PT">Portugal</option>
+                            <option value="QA">Qatar</option>
+                            <option value="RO">Romania</option>
+                            <option value="RU">Russia</option>
+                            <option value="RW">Rwanda</option>
+                            <option value="KN">Saint Kitts and Nevis</option>
+                            <option value="LC">Saint Lucia</option>
+                            <option value="VC">Saint Vincent and the Grenadines</option>
+                            <option value="WS">Samoa</option>
+                            <option value="SM">San Marino</option>
+                            <option value="ST">Sao Tome and Principe</option>
+                            <option value="SA">Saudi Arabia</option>
+                            <option value="SN">Senegal</option>
+                            <option value="RS">Serbia</option>
+                            <option value="SC">Seychelles</option>
+                            <option value="SL">Sierra Leone</option>
+                            <option value="SG">Singapore</option>
+                            <option value="SK">Slovakia</option>
+                            <option value="SI">Slovenia</option>
+                            <option value="SB">Solomon Islands</option>
+                            <option value="SO">Somalia</option>
+                            <option value="ZA">South Africa</option>
+                            <option value="SS">South Sudan</option>
+                            <option value="ES">Spain</option>
+                            <option value="LK">Sri Lanka</option>
+                            <option value="SD">Sudan</option>
+                            <option value="SR">Suriname</option>
+                            <option value="SZ">Swaziland</option>
+                            <option value="SE">Sweden</option>
+                            <option value="CH">Switzerland</option>
+                            <option value="SY">Syria</option>
+                            <option value="TW">Taiwan</option>
+                            <option value="TJ">Tajikistan</option>
+                            <option value="TZ">Tanzania</option>
+                            <option value="TH">Thailand</option>
+                            <option value="TL">Timor-Leste</option>
+                            <option value="TG">Togo</option>
+                            <option value="TO">Tonga</option>
+                            <option value="TT">Trinidad and Tobago</option>
+                            <option value="TN">Tunisia</option>
+                            <option value="TR">Turkey</option>
+                            <option value="TM">Turkmenistan</option>
+                            <option value="TV">Tuvalu</option>
+                            <option value="UG">Uganda</option>
+                            <option value="UA">Ukraine</option>
+                            <option value="AE">United Arab Emirates</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="US">United States</option>
+                            <option value="UY">Uruguay</option>
+                            <option value="UZ">Uzbekistan</option>
+                            <option value="VU">Vanuatu</option>
+                            <option value="VA">Vatican City</option>
+                            <option value="VE">Venezuela</option>
+                            <option value="VN">Vietnam</option>
+                            <option value="YE">Yemen</option>
+                            <option value="ZM">Zambia</option>
+                            <option value="ZW">Zimbabwe</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editRegion">
+                            Region
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editRegion" 
+                            class="form-input" 
+                            placeholder="Enter region"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editLocality">
+                            Locality
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editLocality" 
+                            class="form-input" 
+                            placeholder="Enter locality"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editStreetAddress">
+                            Street Address
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editStreetAddress" 
+                            class="form-input" 
+                            placeholder="Enter street address"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="editPostalCode">
+                            Postal Code
+                        </label>
+                        <input 
+                            type="text" 
+                            id="editPostalCode" 
+                            class="form-input" 
+                            placeholder="Enter postal code"
+                        >
+                    </div>
+                </div>
+
+                <!-- Modal Actions -->
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-reset" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="btn btn-submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for accounts
+        const accounts = [
+            {
+                id: 'be710823-1016-4d43-a002-33ee73e64b8f',
+                jurisdiction: 'IT',
+                brand: 'SISAL',
+                identifiers: [
+                    { type: 'IT_FISCAL_CODE', value: '124325436536' }
+                ],
+                flags: 'MARKETING_COMMUNICATIONS',
+                restrictions: 'SELF_EXCLUDED',
+                givenName: 'Jack',
+                familyName: 'Foo',
+                additionalName: '',
+                prefix: '',
+                suffix: '',
+                secondFamily: '',
+                gender: 'MALE',
+                birthDate: '03/11/1970',
+                locale: 'it-IT',
+                nationality: 'IT',
+                email: 'foobar@email.com',
+                telephoneNumbers: [
+                    { type: 'MOBILE', value: '12436456755' }
+                ],
+                country: 'IT',
+                region: 'TA',
+                locality: 'Rome',
+                streetAddress: '11 Street',
+                postalCode: '123546',
+                preferredCurrency: 'EUR'
+            },
+            {
+                id: 'a8920d12-7c45-4e32-b154-89f4e52c1f3a',
+                jurisdiction: 'DE',
+                brand: 'BetCo',
+                identifiers: [
+                    { type: 'IT_FISCAL_CODE', value: '987654321098' }
+                ],
+                flags: 'VIP',
+                restrictions: '',
+                givenName: 'Anna',
+                familyName: 'Schmidt',
+                additionalName: 'Marie',
+                prefix: 'Dr',
+                suffix: '',
+                secondFamily: '',
+                gender: 'FEMALE',
+                birthDate: '15/05/1985',
+                locale: 'de-DE',
+                nationality: 'DE',
+                email: 'anna.schmidt@email.com',
+                telephoneNumbers: [
+                    { type: 'MOBILE', value: '49151234567' },
+                    { type: 'LANDLINE', value: '498912345678' }
+                ],
+                country: 'DE',
+                region: 'BY',
+                locality: 'Munich',
+                streetAddress: '22 Hauptstrasse',
+                postalCode: '80331',
+                preferredCurrency: 'EUR'
+            },
+            {
+                id: 'c5f3a789-2e41-4b9f-8d67-12ab3c456def',
+                jurisdiction: 'FR',
+                brand: 'ParisGaming',
+                identifiers: [
+                    { type: 'IT_FISCAL_CODE', value: '456789012345' }
+                ],
+                flags: 'VIP',
+                restrictions: '',
+                givenName: 'Pierre',
+                familyName: 'Dubois',
+                additionalName: '',
+                prefix: 'Mr',
+                suffix: '',
+                secondFamily: '',
+                gender: 'MALE',
+                birthDate: '22/08/1992',
+                locale: 'fr-FR',
+                nationality: 'FR',
+                email: 'pierre.dubois@email.com',
+                telephoneNumbers: [
+                    { type: 'LANDLINE', value: '33142345678' }
+                ],
+                country: 'FR',
+                region: 'IDF',
+                locality: 'Paris',
+                streetAddress: '15 Rue de la Paix',
+                postalCode: '75002',
+                preferredCurrency: 'EUR'
+            }
+        ];
+
+        let createIdentifierCount = 0;
+        let createTelephoneCount = 0;
+        let editIdentifierCount = 0;
+        let editTelephoneCount = 0;
+
+        // Create form - Add identifier
+        function addCreateIdentifier() {
+            const container = document.getElementById('createIdentifiers');
+            const index = createIdentifierCount++;
+            const entry = document.createElement('div');
+            entry.className = 'array-entry';
+            entry.id = `createIdentifier${index}`;
+            entry.innerHTML = `
+                <div class="array-entry-header">
+                    <span class="array-entry-title">Identifier ${index + 1}</span>
+                    <button type="button" class="btn btn-remove" onclick="removeCreateIdentifier(${index})">Remove</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Type
+                            <span class="required">*</span>
+                        </label>
+                        <select class="form-select" name="createIdentifierType${index}" required>
+                            <option value="">Select Type</option>
+                            <option value="IT_FISCAL_CODE">IT_FISCAL_CODE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Value
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" name="createIdentifierValue${index}" placeholder="Enter identifier value" required>
+                    </div>
+                </div>
+            `;
+            container.appendChild(entry);
+        }
+
+        function removeCreateIdentifier(index) {
+            const entry = document.getElementById(`createIdentifier${index}`);
+            if (entry) entry.remove();
+        }
+
+        // Create form - Add telephone
+        function addCreateTelephone() {
+            const container = document.getElementById('createTelephones');
+            const index = createTelephoneCount++;
+            const entry = document.createElement('div');
+            entry.className = 'array-entry';
+            entry.id = `createTelephone${index}`;
+            entry.innerHTML = `
+                <div class="array-entry-header">
+                    <span class="array-entry-title">Telephone Number ${index + 1}</span>
+                    <button type="button" class="btn btn-remove" onclick="removeCreateTelephone(${index})">Remove</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Type
+                            <span class="required">*</span>
+                        </label>
+                        <select class="form-select" name="createTelephoneType${index}" required>
+                            <option value="">Select Type</option>
+                            <option value="MOBILE">MOBILE</option>
+                            <option value="LANDLINE">LANDLINE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Number
+                            <span class="required">*</span>
+                        </label>
+                        <input type="tel" class="form-input" name="createTelephoneValue${index}" placeholder="E.164 format" required>
+                    </div>
+                </div>
+            `;
+            container.appendChild(entry);
+        }
+
+        function removeCreateTelephone(index) {
+            const entry = document.getElementById(`createTelephone${index}`);
+            if (entry) entry.remove();
+        }
+
+        // Edit form - Add identifier
+        function addEditIdentifier() {
+            const container = document.getElementById('editIdentifiers');
+            const index = editIdentifierCount++;
+            const entry = document.createElement('div');
+            entry.className = 'array-entry';
+            entry.id = `editIdentifier${index}`;
+            entry.innerHTML = `
+                <div class="array-entry-header">
+                    <span class="array-entry-title">Identifier ${index + 1}</span>
+                    <button type="button" class="btn btn-remove" onclick="removeEditIdentifier(${index})">Remove</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Type
+                            <span class="required">*</span>
+                        </label>
+                        <select class="form-select" name="editIdentifierType${index}" required>
+                            <option value="">Select Type</option>
+                            <option value="IT_FISCAL_CODE">IT_FISCAL_CODE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Value
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" name="editIdentifierValue${index}" placeholder="Enter identifier value" required>
+                    </div>
+                </div>
+            `;
+            container.appendChild(entry);
+        }
+
+        function removeEditIdentifier(index) {
+            const entry = document.getElementById(`editIdentifier${index}`);
+            if (entry) entry.remove();
+        }
+
+        // Edit form - Add telephone
+        function addEditTelephone() {
+            const container = document.getElementById('editTelephones');
+            const index = editTelephoneCount++;
+            const entry = document.createElement('div');
+            entry.className = 'array-entry';
+            entry.id = `editTelephone${index}`;
+            entry.innerHTML = `
+                <div class="array-entry-header">
+                    <span class="array-entry-title">Telephone Number ${index + 1}</span>
+                    <button type="button" class="btn btn-remove" onclick="removeEditTelephone(${index})">Remove</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Type
+                            <span class="required">*</span>
+                        </label>
+                        <select class="form-select" name="editTelephoneType${index}" required>
+                            <option value="">Select Type</option>
+                            <option value="MOBILE">MOBILE</option>
+                            <option value="LANDLINE">LANDLINE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Number
+                            <span class="required">*</span>
+                        </label>
+                        <input type="tel" class="form-input" name="editTelephoneValue${index}" placeholder="E.164 format" required>
+                    </div>
+                </div>
+            `;
+            container.appendChild(entry);
+        }
+
+        function removeEditTelephone(index) {
+            const entry = document.getElementById(`editTelephone${index}`);
+            if (entry) entry.remove();
+        }
+
+        // Open Edit Modal
+        function openEditModal(accountIndex) {
+            const account = accounts[accountIndex];
+            
+            // Clear previous entries
+            document.getElementById('editIdentifiers').innerHTML = '';
+            document.getElementById('editTelephones').innerHTML = '';
+            editIdentifierCount = 0;
+            editTelephoneCount = 0;
+            
+            // Set basic fields
+            document.getElementById('editJurisdiction').value = account.jurisdiction;
+            document.getElementById('editBrand').value = account.brand;
+            document.getElementById('editPreferredCurrency').value = account.preferredCurrency;
+            document.getElementById('editFlags').value = account.flags;
+            document.getElementById('editRestrictions').value = account.restrictions;
+            document.getElementById('editGivenName').value = account.givenName;
+            document.getElementById('editFamilyName').value = account.familyName;
+            document.getElementById('editAdditionalName').value = account.additionalName;
+            document.getElementById('editPrefix').value = account.prefix;
+            document.getElementById('editSuffix').value = account.suffix;
+            document.getElementById('editSecondFamily').value = account.secondFamily;
+            document.getElementById('editGender').value = account.gender;
+            document.getElementById('editBirthDate').value = account.birthDate;
+            document.getElementById('editLocale').value = account.locale;
+            document.getElementById('editNationality').value = account.nationality;
+            document.getElementById('editEmail').value = account.email;
+            document.getElementById('editCountry').value = account.country;
+            document.getElementById('editRegion').value = account.region;
+            document.getElementById('editLocality').value = account.locality;
+            document.getElementById('editStreetAddress').value = account.streetAddress;
+            document.getElementById('editPostalCode').value = account.postalCode;
+            
+            // Add identifiers
+            account.identifiers.forEach((identifier, idx) => {
+                addEditIdentifier();
+                document.querySelector(`[name="editIdentifierType${idx}"]`).value = identifier.type;
+                document.querySelector(`[name="editIdentifierValue${idx}"]`).value = identifier.value;
+            });
+            
+            // Add telephone numbers
+            account.telephoneNumbers.forEach((phone, idx) => {
+                addEditTelephone();
+                document.querySelector(`[name="editTelephoneType${idx}"]`).value = phone.type;
+                document.querySelector(`[name="editTelephoneValue${idx}"]`).value = phone.value;
+            });
+            
+            document.getElementById('editModal').classList.add('show');
+        }
+
+        // Close Edit Modal
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('show');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+
+        // Edit Form submission
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            console.log('Account updated:', data);
+            alert('Account updated successfully!\nCheck console for details.');
+            closeEditModal();
+        });
+
+        // Create Form submission
+        document.getElementById('createForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            console.log('Player created:', data);
+            alert('Player created successfully!\nCheck console for details.');
+            this.reset();
+            document.getElementById('createIdentifiers').innerHTML = '';
+            document.getElementById('createTelephones').innerHTML = '';
+            createIdentifierCount = 0;
+            createTelephoneCount = 0;
+        });
+
+        // Reset button
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to reset the form?')) {
+                document.getElementById('createForm').reset();
+                document.getElementById('createIdentifiers').innerHTML = '';
+                document.getElementById('createTelephones').innerHTML = '';
+                createIdentifierCount = 0;
+                createTelephoneCount = 0;
+            }
+        });
+
+        // Initialize with one identifier and one telephone for create form
+        addCreateIdentifier();
+        addCreateTelephone();
+    </script>
+</body>
+</html>
