@@ -36,15 +36,15 @@
         }
 
         .logo {
-            width: 60px;
-            height: 60px;
-            background-color: #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
+            width: 60%;
+            height: auto;
             margin-bottom: 30px;
-            color: white;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .nav-menu {
@@ -114,6 +114,21 @@
             padding-bottom: 15px;
             border-bottom: 2px solid #ddd;
             color: #333;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .section-header .section-title {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
 
         /* Table Styles */
@@ -425,12 +440,100 @@
                 font-size: 18px;
             }
         }
+
+        /* Mantine MultiSelect Styles */
+        .mantine-MultiSelect-root {
+            position: relative;
+        }
+
+        .mantine-Input-wrapper {
+            position: relative;
+        }
+
+        .mantine-Input-input {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 1px solid #999;
+            background-color: #ffffff;
+            color: #333;
+            outline: none;
+            transition: all 0.2s;
+            font-family: inherit;
+            cursor: pointer;
+            min-height: 42px;
+        }
+
+        .mantine-Input-input:focus {
+            border-color: #666;
+            box-shadow: 0 0 0 2px rgba(102, 102, 102, 0.1);
+        }
+
+        .mantine-MultiSelect-values {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 4px;
+        }
+
+        .mantine-MultiSelect-value {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background-color: #e0e0e0;
+            border: 1px solid #999;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .mantine-MultiSelect-value-remove {
+            cursor: pointer;
+            padding: 0 4px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .mantine-MultiSelect-value-remove:hover {
+            color: #333;
+        }
+
+        .mantine-MultiSelect-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-top: 4px;
+            background: white;
+            border: 1px solid #999;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mantine-MultiSelect-option {
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .mantine-MultiSelect-option:hover {
+            background-color: #f5f5f5;
+        }
+
+        .mantine-MultiSelect-option.selected {
+            background-color: #e0e0e0;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
-        <div class="logo" title="PSN Emulator">♠</div>
+        <div class="logo" title="PSN Emulator"><img src="./sisal-big.png" alt="Logo"></div>
         <ul class="nav-menu">
             <li class="nav-item">
                 <a href="player-account.html" class="nav-link active">Player Account</a>
@@ -457,16 +560,18 @@
 
         <!-- Section: Account Viewing and Filtering -->
         <section class="section">
-            <h2 class="section-title">Account Viewing and Filtering</h2>
+            <div class="section-header">
+                <h2 class="section-title">Account Viewing and Filtering</h2>
+                <button type="button" class="btn btn-submit" onclick="openCreatePlayerModal()">Create Player</button>
+            </div>
 
             <!-- Accounts Table -->
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Player ID</th>
                             <th>Jurisdiction</th>
-                            <th>Brand</th>
                             <th>Given Name</th>
                             <th>Family Name</th>
                             <th>Email</th>
@@ -478,7 +583,6 @@
                         <tr>
                             <td>be710823-1016-4d43-a002-33ee73e64b8f</td>
                             <td>IT</td>
-                            <td>SISAL</td>
                             <td>Jack</td>
                             <td>Foo</td>
                             <td>foobar@email.com</td>
@@ -490,7 +594,6 @@
                         <tr>
                             <td>a8920d12-7c45-4e32-b154-89f4e52c1f3a</td>
                             <td>DE</td>
-                            <td>BetCo</td>
                             <td>Anna</td>
                             <td>Schmidt</td>
                             <td>anna.schmidt@email.com</td>
@@ -502,7 +605,6 @@
                         <tr>
                             <td>c5f3a789-2e41-4b9f-8d67-12ab3c456def</td>
                             <td>FR</td>
-                            <td>ParisGaming</td>
                             <td>Pierre</td>
                             <td>Dubois</td>
                             <td>pierre.dubois@email.com</td>
@@ -517,7 +619,7 @@
         </section>
 
         <!-- Section: Create Player -->
-        <section class="section">
+        <section class="section" style="display: none;" id="createPlayerSection">
             <h2 class="section-title">Create Player</h2>
 
             <form id="createForm">
@@ -554,29 +656,23 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="createBrand">
-                            Brand
-                            <span class="required">*</span>
-                        </label>
-                        <input 
-                            type="text" 
-                            id="createBrand" 
-                            class="form-input" 
-                            placeholder="Enter brand"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
                         <label class="form-label" for="createPreferredCurrency">
-                            Preferred Currency
+                            Currency
                         </label>
-                        <input 
-                            type="text" 
-                            id="createPreferredCurrency" 
-                            class="form-input" 
-                            placeholder="e.g., EUR, USD"
-                        >
+                        <div class="mantine-MultiSelect-root" data-multiselect="createPreferredCurrency">
+                            <div class="mantine-Input-wrapper">
+                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span class="multiselect-placeholder" style="color: #999;">Pick currencies</span>
+                                </div>
+                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
+                                    <div class="mantine-MultiSelect-option" data-value="EUR">EUR</div>
+                                    <div class="mantine-MultiSelect-option" data-value="USD">USD</div>
+                                    <div class="mantine-MultiSelect-option" data-value="GBP">GBP</div>
+                                    <div class="mantine-MultiSelect-option" data-value="JPY">JPY</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="createPreferredCurrency" />
+                        </div>
                     </div>
                 </div>
 
@@ -585,19 +681,25 @@
                 <div id="createIdentifiers" class="array-entries"></div>
                 <button type="button" class="btn btn-secondary btn-add" onclick="addCreateIdentifier()">Add Identifier</button>
 
-                <!-- Flags -->
-                <h3 class="subsection-title">Flags</h3>
+                <!-- Flags and Privileges -->
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label" for="createFlags">
-                            Flags
+                            Flags and Privileges
                         </label>
-                        <select id="createFlags" class="form-select">
-                            <option value="">Select Flag</option>
-                            <option value="VIP">VIP</option>
-                            <option value="MARKETING_COMMUNICATIONS">MARKETING_COMMUNICATIONS</option>
-                            <option value="BLOCK_IN_CLIENT_MARKETING">BLOCK_IN_CLIENT_MARKETING</option>
-                        </select>
+                        <div class="mantine-MultiSelect-root" data-multiselect="createFlags">
+                            <div class="mantine-Input-wrapper">
+                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span class="multiselect-placeholder" style="color: #999;">Pick flags and privileges</span>
+                                </div>
+                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
+                                    <div class="mantine-MultiSelect-option" data-value="VIP">VIP</div>
+                                    <div class="mantine-MultiSelect-option" data-value="MARKETING_COMMUNICATIONS">MARKETING_COMMUNICATIONS</div>
+                                    <div class="mantine-MultiSelect-option" data-value="BLOCK_IN_CLIENT_MARKETING">BLOCK_IN_CLIENT_MARKETING</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="createFlags" />
+                        </div>
                     </div>
                 </div>
 
@@ -734,7 +836,7 @@
 
                     <div class="form-group">
                         <label class="form-label" for="createLocale">
-                            Locale
+                            Language
                         </label>
                         <input 
                             type="text" 
@@ -748,12 +850,16 @@
                         <label class="form-label" for="createNationality">
                             Nationality
                         </label>
-                        <input 
-                            type="text" 
-                            id="createNationality" 
-                            class="form-input" 
-                            placeholder="ISO 3166-1 code"
-                        >
+                        <select id="createNationality" class="form-select">
+                            <option value="">Select Country</option>
+                            <option value="IT">IT - Italy</option>
+                            <option value="DE">DE - Germany</option>
+                            <option value="FR">FR - France</option>
+                            <option value="ES">ES - Spain</option>
+                            <option value="PT">PT - Portugal</option>
+                            <option value="GB">GB - United Kingdom</option>
+                            <option value="US">US - United States</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -1083,29 +1189,23 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="editBrand">
-                            Brand
-                            <span class="required">*</span>
-                        </label>
-                        <input 
-                            type="text" 
-                            id="editBrand" 
-                            class="form-input" 
-                            placeholder="Enter brand"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
                         <label class="form-label" for="editPreferredCurrency">
-                            Preferred Currency
+                            Currency
                         </label>
-                        <input 
-                            type="text" 
-                            id="editPreferredCurrency" 
-                            class="form-input" 
-                            placeholder="e.g., EUR, USD"
-                        >
+                        <div class="mantine-MultiSelect-root" data-multiselect="editPreferredCurrency">
+                            <div class="mantine-Input-wrapper">
+                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span class="multiselect-placeholder" style="color: #999;">Pick currencies</span>
+                                </div>
+                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
+                                    <div class="mantine-MultiSelect-option" data-value="EUR">EUR</div>
+                                    <div class="mantine-MultiSelect-option" data-value="USD">USD</div>
+                                    <div class="mantine-MultiSelect-option" data-value="GBP">GBP</div>
+                                    <div class="mantine-MultiSelect-option" data-value="JPY">JPY</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="editPreferredCurrency" />
+                        </div>
                     </div>
                 </div>
 
@@ -1114,19 +1214,25 @@
                 <div id="editIdentifiers" class="array-entries"></div>
                 <button type="button" class="btn btn-secondary btn-add" onclick="addEditIdentifier()">Add Identifier</button>
 
-                <!-- Flags -->
-                <h3 class="subsection-title">Flags</h3>
+                <!-- Flags and Privileges -->
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label" for="editFlags">
-                            Flags
+                            Flags and Privileges
                         </label>
-                        <select id="editFlags" class="form-select">
-                            <option value="">Select Flag</option>
-                            <option value="VIP">VIP</option>
-                            <option value="MARKETING_COMMUNICATIONS">MARKETING_COMMUNICATIONS</option>
-                            <option value="BLOCK_IN_CLIENT_MARKETING">BLOCK_IN_CLIENT_MARKETING</option>
-                        </select>
+                        <div class="mantine-MultiSelect-root" data-multiselect="editFlags">
+                            <div class="mantine-Input-wrapper">
+                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span class="multiselect-placeholder" style="color: #999;">Pick flags and privileges</span>
+                                </div>
+                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
+                                    <div class="mantine-MultiSelect-option" data-value="VIP">VIP</div>
+                                    <div class="mantine-MultiSelect-option" data-value="MARKETING_COMMUNICATIONS">MARKETING_COMMUNICATIONS</div>
+                                    <div class="mantine-MultiSelect-option" data-value="BLOCK_IN_CLIENT_MARKETING">BLOCK_IN_CLIENT_MARKETING</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="editFlags" />
+                        </div>
                     </div>
                 </div>
 
@@ -1263,7 +1369,7 @@
 
                     <div class="form-group">
                         <label class="form-label" for="editLocale">
-                            Locale
+                            Language
                         </label>
                         <input 
                             type="text" 
@@ -1277,12 +1383,16 @@
                         <label class="form-label" for="editNationality">
                             Nationality
                         </label>
-                        <input 
-                            type="text" 
-                            id="editNationality" 
-                            class="form-input" 
-                            placeholder="ISO 3166-1 code"
-                        >
+                        <select id="editNationality" class="form-select">
+                            <option value="">Select Country</option>
+                            <option value="IT">IT - Italy</option>
+                            <option value="DE">DE - Germany</option>
+                            <option value="FR">FR - France</option>
+                            <option value="ES">ES - Spain</option>
+                            <option value="PT">PT - Portugal</option>
+                            <option value="GB">GB - United Kingdom</option>
+                            <option value="US">US - United States</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -1574,7 +1684,255 @@
         </div>
     </div>
 
+    <!-- Create Player Modal -->
+    <div id="createPlayerModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">Create Player</h2>
+            <form id="createPlayerModalForm">
+                <!-- Copy the create form content here -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="modalCreateJurisdiction">
+                            Jurisdiction
+                            <span class="required">*</span>
+                        </label>
+                        <select id="modalCreateJurisdiction" class="form-select" required>
+                            <option value="">Select Jurisdiction</option>
+                            <option value="IT">IT</option>
+                            <option value="ES">ES</option>
+                            <option value="FR">FR</option>
+                            <option value="PT">PT</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="modalCreateCurrency">
+                            Currency
+                        </label>
+                        <div class="mantine-MultiSelect-root" data-multiselect="modalCreateCurrency">
+                            <div class="mantine-Input-wrapper">
+                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span class="multiselect-placeholder" style="color: #999;">Pick currencies</span>
+                                </div>
+                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
+                                    <div class="mantine-MultiSelect-option" data-value="EUR">EUR</div>
+                                    <div class="mantine-MultiSelect-option" data-value="USD">USD</div>
+                                    <div class="mantine-MultiSelect-option" data-value="GBP">GBP</div>
+                                    <div class="mantine-MultiSelect-option" data-value="JPY">JPY</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="modalCreateCurrency" />
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Personal Information</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="modalCreateGivenName">
+                            Given Name
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="modalCreateGivenName" 
+                            class="form-input" 
+                            placeholder="Enter given name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="modalCreateFamilyName">
+                            Family Name
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="modalCreateFamilyName" 
+                            class="form-input" 
+                            placeholder="Enter family name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="modalCreateEmail">
+                            Email
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="modalCreateEmail" 
+                            class="form-input" 
+                            placeholder="Enter email"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="modalCreateBirthDate">
+                            Birth Date (dd/MM/yyyy)
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="modalCreateBirthDate" 
+                            class="form-input" 
+                            placeholder="dd/MM/yyyy"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Flags and Privileges -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="modalCreateFlags">
+                            Flags and Privileges
+                        </label>
+                        <div class="mantine-MultiSelect-root" data-multiselect="modalCreateFlags">
+                            <div class="mantine-Input-wrapper">
+                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span class="multiselect-placeholder" style="color: #999;">Pick flags and privileges</span>
+                                </div>
+                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
+                                    <div class="mantine-MultiSelect-option" data-value="VIP">VIP</div>
+                                    <div class="mantine-MultiSelect-option" data-value="MARKETING_COMMUNICATIONS">MARKETING_COMMUNICATIONS</div>
+                                    <div class="mantine-MultiSelect-option" data-value="BLOCK_IN_CLIENT_MARKETING">BLOCK_IN_CLIENT_MARKETING</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="modalCreateFlags" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Actions -->
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-reset" onclick="closeCreatePlayerModal()">Cancel</button>
+                    <button type="submit" class="btn btn-submit">Create Player</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
+        // Initialize MultiSelect components
+        document.addEventListener('DOMContentLoaded', function() {
+            const multiSelects = document.querySelectorAll('[data-multiselect]');
+            
+            multiSelects.forEach(container => {
+                const inputWrapper = container.querySelector('.mantine-Input-input');
+                const dropdown = container.querySelector('.mantine-MultiSelect-dropdown');
+                const options = container.querySelectorAll('.mantine-MultiSelect-option');
+                const hiddenInput = container.querySelector('input[type="hidden"]');
+                const placeholder = container.querySelector('.multiselect-placeholder');
+                const selectedValues = [];
+
+                // Toggle dropdown
+                inputWrapper.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                });
+
+                // Handle option selection
+                options.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const value = option.getAttribute('data-value');
+                        const text = option.textContent;
+
+                        if (option.classList.contains('selected')) {
+                            // Remove selection
+                            option.classList.remove('selected');
+                            const index = selectedValues.findIndex(v => v.value === value);
+                            if (index > -1) {
+                                selectedValues.splice(index, 1);
+                                removeValuePill(inputWrapper, value);
+                            }
+                        } else {
+                            // Add selection
+                            option.classList.add('selected');
+                            selectedValues.push({ value, text });
+                            addValuePill(inputWrapper, value, text);
+                        }
+
+                        // Update hidden input
+                        hiddenInput.value = selectedValues.map(v => v.value).join(',');
+
+                        // Hide/show placeholder
+                        if (selectedValues.length > 0 && placeholder) {
+                            placeholder.style.display = 'none';
+                        } else if (placeholder) {
+                            placeholder.style.display = 'inline';
+                        }
+                    });
+                });
+
+                function addValuePill(wrapper, value, text) {
+                    const pill = document.createElement('span');
+                    pill.className = 'mantine-MultiSelect-value';
+                    pill.setAttribute('data-value', value);
+                    pill.innerHTML = `${text}<span class="mantine-MultiSelect-value-remove" onclick="removeMultiSelectValue(this, event)">×</span>`;
+                    wrapper.appendChild(pill);
+                }
+
+                function removeValuePill(wrapper, value) {
+                    const pill = wrapper.querySelector(`.mantine-MultiSelect-value[data-value="${value}"]`);
+                    if (pill) pill.remove();
+                }
+
+                // Store reference for external access
+                container._multiselect = {
+                    selectedValues,
+                    inputWrapper,
+                    dropdown,
+                    options,
+                    hiddenInput,
+                    placeholder
+                };
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', () => {
+                document.querySelectorAll('.mantine-MultiSelect-dropdown').forEach(dropdown => {
+                    dropdown.style.display = 'none';
+                });
+            });
+        });
+
+        // Remove value function (called from pill × button)
+        function removeMultiSelectValue(element, event) {
+            event.stopPropagation();
+            const pill = element.parentElement;
+            const value = pill.getAttribute('data-value');
+            const container = pill.closest('[data-multiselect]');
+            const multiselect = container._multiselect;
+
+            // Remove from selectedValues array
+            const index = multiselect.selectedValues.findIndex(v => v.value === value);
+            if (index > -1) {
+                multiselect.selectedValues.splice(index, 1);
+            }
+
+            // Update hidden input
+            multiselect.hiddenInput.value = multiselect.selectedValues.map(v => v.value).join(',');
+
+            // Unselect option
+            const option = Array.from(multiselect.options).find(opt => opt.getAttribute('data-value') === value);
+            if (option) {
+                option.classList.remove('selected');
+            }
+
+            // Remove pill
+            pill.remove();
+
+            // Show placeholder if no values
+            if (multiselect.selectedValues.length === 0 && multiselect.placeholder) {
+                multiselect.placeholder.style.display = 'inline';
+            }
+        }
+
         // Sample data for accounts
         const accounts = [
             {
@@ -1849,7 +2207,6 @@
             
             // Set basic fields
             document.getElementById('editJurisdiction').value = account.jurisdiction;
-            document.getElementById('editBrand').value = account.brand;
             document.getElementById('editPreferredCurrency').value = account.preferredCurrency;
             document.getElementById('editFlags').value = account.flags;
             document.getElementById('editRestrictions').value = account.restrictions;
@@ -1892,10 +2249,27 @@
             document.getElementById('editModal').classList.remove('show');
         }
 
+        // Open Create Player Modal
+        function openCreatePlayerModal() {
+            document.getElementById('createPlayerModal').classList.add('show');
+        }
+
+        // Close Create Player Modal
+        function closeCreatePlayerModal() {
+            document.getElementById('createPlayerModal').classList.remove('show');
+        }
+
         // Close modal when clicking outside
         document.getElementById('editModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeEditModal();
+            }
+        });
+
+        // Close create player modal when clicking outside
+        document.getElementById('createPlayerModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCreatePlayerModal();
             }
         });
 
@@ -1941,6 +2315,19 @@
         // Initialize with one identifier and one telephone for create form
         addCreateIdentifier();
         addCreateTelephone();
+
+        // Create Player Modal Form submission
+        document.getElementById('createPlayerModalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            console.log('Player created from modal:', data);
+            alert('Player created successfully!\nCheck console for details.');
+            this.reset();
+            closeCreatePlayerModal();
+        });
     </script>
 </body>
 </html>

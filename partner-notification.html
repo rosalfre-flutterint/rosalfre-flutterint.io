@@ -36,15 +36,15 @@
         }
 
         .logo {
-            width: 60px;
-            height: 60px;
-            background-color: #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
+            width: 60%;
+            height: auto;
             margin-bottom: 30px;
-            color: white;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .nav-menu {
@@ -263,7 +263,7 @@
 <body>
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
-        <div class="logo" title="PSN Emulator">♠</div>
+        <div class="logo" title="PSN Emulator"><img src="./sisal-big.png" alt="Logo"></div>
         <ul class="nav-menu">
             <li class="nav-item">
                 <a href="player-account.html" class="nav-link">Player Account</a>
@@ -324,8 +324,8 @@
                     </div>
                 </div>
 
-                <!-- Second Row: expiresAt, clientId, brand -->
-                <div class="form-row row-3">
+                <!-- Second Row: expiresAt, clientId -->
+                <div class="form-row row-2">
                     <div class="form-group">
                         <label class="form-label">Expires At</label>
                         <input 
@@ -343,17 +343,6 @@
                             <option value="client-003">Client 003</option>
                             <option value="client-004">Client 004</option>
                             <option value="client-005">Client 005</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Brand</label>
-                        <select class="form-select" id="brand">
-                            <option value="">Select Brand</option>
-                            <option value="brand-alpha">Brand Alpha</option>
-                            <option value="brand-beta">Brand Beta</option>
-                            <option value="brand-gamma">Brand Gamma</option>
-                            <option value="brand-delta">Brand Delta</option>
-                            <option value="brand-epsilon">Brand Epsilon</option>
                         </select>
                     </div>
                 </div>
