@@ -171,6 +171,19 @@
             gap: 24px;
             margin-bottom: 30px;
         }
+         .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .player-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
 
         .form-group {
             margin-bottom: 0;
@@ -696,8 +709,8 @@
 
             <form id="createForm">
                 <!-- Basic Information -->
-                <div class="form-grid">
-                    <div class="form-group">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 30px;">
+                    <div class="form-group" style="margin-bottom: 0;">
                         <label class="form-label" for="createJurisdiction">
                             Jurisdiction
                             <span class="required">*</span>
@@ -727,7 +740,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" style="margin-bottom: 0;">
                         <label class="form-label" for="createPreferredCurrency">
                             Currency
                         </label>
@@ -754,7 +767,8 @@
                 <button type="button" class="btn btn-secondary btn-add" onclick="addCreateIdentifier()">Add Identifier</button>
 
                 <!-- Flags and Privileges -->
-                <div class="form-grid">
+                <h3 class="subsection-title">Flags and Privileges</h3>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 30px;">
                     <div class="form-group">
                         <label class="form-label" for="createFlags">
                             Flags and Privileges
@@ -777,7 +791,7 @@
 
                 <!-- Restrictions -->
                 <h3 class="subsection-title">Restrictions</h3>
-                <div class="form-grid">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 30px;">
                     <div class="form-group">
                         <label class="form-label" for="createRestrictions">
                             Restrictions
@@ -798,7 +812,7 @@
 
                 <!-- Personal Data - Name -->
                 <h3 class="subsection-title">Personal Data - Name</h3>
-                <div class="form-grid">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px;">
                     <div class="form-group">
                         <label class="form-label" for="createGivenName">
                             Given Name
@@ -878,7 +892,7 @@
 
                 <!-- Personal Data - Basic Info -->
                 <h3 class="subsection-title">Personal Data - Basic Information</h3>
-                <div class="form-grid">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px;">
                     <div class="form-group">
                         <label class="form-label" for="createGender">
                             Gender
@@ -934,7 +948,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" style="grid-column: span 2;">
                         <label class="form-label" for="createEmail">
                             Email
                             <span class="required">*</span>
@@ -1229,7 +1243,7 @@
             <h2 class="modal-header">Edit Player Account</h2>
             <form id="editForm">
                 <!-- Basic Information -->
-                <div class="form-grid">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 30px;">
                     <div class="form-group">
                         <label class="form-label" for="editJurisdiction">
                             Jurisdiction
@@ -1286,8 +1300,9 @@
                 <div id="editIdentifiers" class="array-entries"></div>
                 <button type="button" class="btn btn-secondary btn-add" onclick="addEditIdentifier()">Add Identifier</button>
 
-                <!-- Flags and Privileges -->
-                <div class="form-grid">
+                <!-- Flags and Privileges & Restrictions -->
+                <h3 class="subsection-title">Flags and Privileges & Restrictions</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 30px;">
                     <div class="form-group">
                         <label class="form-label" for="editFlags">
                             Flags and Privileges
@@ -1306,11 +1321,7 @@
                             <input type="hidden" id="editFlags" />
                         </div>
                     </div>
-                </div>
 
-                <!-- Restrictions -->
-                <h3 class="subsection-title">Restrictions</h3>
-                <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label" for="editRestrictions">
                             Restrictions
@@ -1331,7 +1342,7 @@
 
                 <!-- Personal Data - Name -->
                 <h3 class="subsection-title">Personal Data - Name</h3>
-                <div class="form-grid">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px;">
                     <div class="form-group">
                         <label class="form-label" for="editGivenName">
                             Given Name
@@ -1411,7 +1422,7 @@
 
                 <!-- Personal Data - Basic Info -->
                 <h3 class="subsection-title">Personal Data - Basic Information</h3>
-                <div class="form-grid">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px;">
                     <div class="form-group">
                         <label class="form-label" for="editGender">
                             Gender
@@ -1467,7 +1478,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" style="grid-column: span 2;">
                         <label class="form-label" for="editEmail">
                             Email
                             <span class="required">*</span>
@@ -1762,7 +1773,7 @@
             <h2 class="modal-header">Create Player</h2>
             <form id="createPlayerModalForm">
                 <!-- Copy the create form content here -->
-                <div class="form-grid">
+                <div class="form-grid-2">
                     <div class="form-group">
                         <label class="form-label" for="modalCreateJurisdiction">
                             Jurisdiction
@@ -1858,7 +1869,7 @@
                 </div>
 
                 <!-- Flags and Privileges -->
-                <div class="form-grid">
+                <div>
                     <div class="form-group">
                         <label class="form-label" for="modalCreateFlags">
                             Flags and Privileges
@@ -2117,7 +2128,7 @@
                     <span class="array-entry-title">Identifier ${index + 1}</span>
                     <button type="button" class="btn btn-remove" onclick="removeCreateIdentifier(${index})">Remove</button>
                 </div>
-                <div class="form-grid">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
                     <div class="form-group">
                         <label class="form-label">
                             Type
@@ -2198,7 +2209,7 @@
                     <span class="array-entry-title">Identifier ${index + 1}</span>
                     <button type="button" class="btn btn-remove" onclick="removeEditIdentifier(${index})">Remove</button>
                 </div>
-                <div class="form-grid">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
                     <div class="form-group">
                         <label class="form-label">
                             Type
@@ -2387,6 +2398,40 @@
         // Initialize with one identifier and one telephone for create form
         addCreateIdentifier();
         addCreateTelephone();
+
+        // Filter Form reset handler
+        document.getElementById('filterForm').addEventListener('reset', function(e) {
+            // Reset multi-select components
+            setTimeout(() => {
+                const filterMultiSelects = ['filterRestriction', 'filterFlags'];
+                filterMultiSelects.forEach(id => {
+                    const container = document.querySelector(`[data-multiselect="${id}"]`);
+                    if (container && container._multiselect) {
+                        const multiselect = container._multiselect;
+                        
+                        // Clear selected values array
+                        multiselect.selectedValues.length = 0;
+                        
+                        // Clear hidden input
+                        multiselect.hiddenInput.value = '';
+                        
+                        // Remove all pills from display
+                        const pills = multiselect.inputWrapper.querySelectorAll('.mantine-MultiSelect-value');
+                        pills.forEach(pill => pill.remove());
+                        
+                        // Unselect all options
+                        multiselect.options.forEach(option => {
+                            option.classList.remove('selected');
+                        });
+                        
+                        // Show placeholder
+                        if (multiselect.placeholder) {
+                            multiselect.placeholder.style.display = 'inline';
+                        }
+                    }
+                });
+            }, 0);
+        });
 
         // Create Player Modal Form submission
         document.getElementById('createPlayerModalForm').addEventListener('submit', function(e) {
