@@ -565,6 +565,78 @@
                 <button type="button" class="btn btn-submit" onclick="openCreatePlayerModal()">Create Player</button>
             </div>
 
+            <!-- Filter Form -->
+            <form id="filterForm" style="margin-bottom: 24px;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="filterJurisdiction">Jurisdiction</label>
+                        <select id="filterJurisdiction" class="form-select">
+                            <option value="">Select Jurisdiction</option>
+                            <option value="IT">IT</option>
+                            <option value="ES">ES</option>
+                            <option value="FR">FR</option>
+                            <option value="PT">PT</option>
+                            <option value="BE">BE</option>
+                            <option value="DE">DE</option>
+                            <option value="BG">BG</option>
+                            <option value="GR">GR</option>
+                            <option value="SE">SE</option>
+                            <option value="DK">DK</option>
+                            <option value="RO">RO</option>
+                            <option value="CH">CH</option>
+                            <option value="NL">NL</option>
+                            <option value="UK">UK</option>
+                            <option value="CZ">CZ</option>
+                            <option value="IN">IN</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="filterRestriction">Restriction</label>
+                        <div class="mantine-MultiSelect-root" data-multiselect="filterRestriction">
+                            <div class="mantine-Input-wrapper">
+                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span class="multiselect-placeholder" style="color: #999;">Pick restrictions</span>
+                                </div>
+                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
+                                    <div class="mantine-MultiSelect-option" data-value="SELF_EXCLUDED">SELF_EXCLUDED</div>
+                                    <div class="mantine-MultiSelect-option" data-value="BANNED_BY_REGULATOR">BANNED_BY_REGULATOR</div>
+                                    <div class="mantine-MultiSelect-option" data-value="RESTRICTED_ACCESS">RESTRICTED_ACCESS</div>
+                                    <div class="mantine-MultiSelect-option" data-value="DENY_SHARED_LIQUIDITY">DENY_SHARED_LIQUIDITY</div>
+                                    <div class="mantine-MultiSelect-option" data-value="LOGIN_ONLY">LOGIN_ONLY</div>
+                                    <div class="mantine-MultiSelect-option" data-value="TEMPORARY_CLOSED">TEMPORARY_CLOSED</div>
+                                    <div class="mantine-MultiSelect-option" data-value="CLOSED">CLOSED</div>
+                                    <div class="mantine-MultiSelect-option" data-value="ANONYMIZED">ANONYMIZED</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="filterRestriction" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="filterFlags">Flags</label>
+                        <div class="mantine-MultiSelect-root" data-multiselect="filterFlags">
+                            <div class="mantine-Input-wrapper">
+                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span class="multiselect-placeholder" style="color: #999;">Pick flags and privileges</span>
+                                </div>
+                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
+                                    <div class="mantine-MultiSelect-option" data-value="VIP">VIP</div>
+                                    <div class="mantine-MultiSelect-option" data-value="MARKETING_COMMUNICATIONS">MARKETING_COMMUNICATIONS</div>
+                                    <div class="mantine-MultiSelect-option" data-value="BLOCK_IN_CLIENT_MARKETING">BLOCK_IN_CLIENT_MARKETING</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="filterFlags" />
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display: flex; align-items: flex-end; gap: 12px;">
+                        <button type="reset" class="btn btn-reset" style="flex: 1;">Reset</button>
+                        <button type="submit" class="btn btn-submit" style="flex: 1;">Submit</button>
+                    </div>
+                </div>
+            </form>
+
             <!-- Accounts Table -->
             <div class="table-container">
                 <table>
