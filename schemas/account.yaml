@@ -1,0 +1,257 @@
+openapi: 3.0.0
+info:
+  title: partner-account-api
+  description: The API for the PSN Partner to get master account data
+  version: 0.5.0
+paths:
+  /accounts/current:
+    get:
+      tags:
+        - Partner Account
+      description: Returns master account data from the Partner
+      operationId: getAccount
+      responses:
+        200:
+          description: The API call successfully executed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PartnerAccount"
+              examples:
+                IT:
+                  value:
+                    id: be710823-1016-4d43-a002-33ee73e64b8f
+                    jurisdiction: IT
+                    brand: SISAL
+                    identifiers:
+                      - type: IT_FISCAL_CODE
+                        value: 124325436536
+                    flags:
+                      - MARKETING_COMMUNICATIONS
+                    restrictions:
+                      - SELF_EXCLUDED
+                      - BANNED_BY_REGULATOR
+                    personalData:
+                      name:
+                        given: Jack
+                        family: Foo
+                      gender: MALE
+                      locale: it-IT
+                      birthDate: 03/11/1970
+                      email: foobar@email.com
+                      telephoneNumbers:
+                        - type: MOBILE
+                          value: 12436456755
+                      address:
+                        country: IT
+                        region: TA
+                        locality: Rome
+                        streetAddress: 11 Street
+                        postalCode: 123546
+                    preferredCurrency: EUR
+        401:
+          description: Access token is missing or invalid
+      security:
+        - bearerAuth: [ ]
+components:
+  schemas:
+    PartnerAccount:
+      type: object
+      required:
+        - id
+        - jurisdiction
+        - brand
+        - identifiers
+        - flags
+        - restrictions
+        - personalData
+      properties:
+        id:
+          type: string
+          description: master account user ID
+        jurisdiction:
+          $ref: "#/components/schemas/Jurisdiction"
+        brand:
+          type: string
+          description: The brand used for this account
+        identifiers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        flags:
+          type: array
+          items:
+            enum:
+              - VIP
+              - MARKETING_COMMUNICATIONS
+              - BLOCK_IN_CLIENT_MARKETING
+        restrictions:
+          type: array
+          items:
+            enum:
+              - SELF_EXCLUDED
+              - BANNED_BY_REGULATOR
+              - RESTRICTED_ACCESS
+              - DENY_SHARED_LIQUIDITY
+              - LOGIN_ONLY
+              - TEMPORARY_CLOSED
+              - CLOSED
+              - ANONYMIZED
+        personalData:
+          $ref: "#/components/schemas/PersonalData"
+        preferredCurrency:
+          type: string
+          format: "ISO 4217"
+    Identifier:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          type: string
+          description: The identifier type
+          enum:
+            - IT_FISCAL_CODE # The Italian fiscal code (codice fiscale) of the account holder.
+        value:
+          description: The value of the identifier
+          type: string
+    PersonalData:
+      type: object
+      required:
+        - name
+        - address
+        - gender
+        - birthDate
+        - email
+        - telephoneNumbers
+      properties:
+        name:
+          $ref: "#/components/schemas/PersonName"
+        address:
+          $ref: "#/components/schemas/PostalAddress"
+        gender:
+          type: string
+          description: Gender of the user
+          enum:
+            - MALE
+            - FEMALE
+            - X
+        locale:
+          type: string
+          description: User account locale represented as a BCP47 language tag. This is typically an ISO 639 Alpha-2 language code in lowercase and an ISO 3166-1 Alpha-2 country code in uppercase, separated by a dash. For example, en-US or fr-CA. As a compatibility note, some implementations have used an underscore as the separator rather than a dash, for example, en_US; Relying Parties MAY choose to accept this locale syntax as well.
+          format: BCP47
+        nationality:
+          type: string
+          description: The ISO 3166-1 alpha-2 country code representing the account nationality.
+          format: "ISO 3166-1"
+        birthDate:
+          type: string
+          description: The account holders date of birth.
+          format: dd/MM/yyyy
+        email:
+          type: string
+          description: Email address of the user
+        telephoneNumbers:
+          type: array
+          items:
+            $ref: "#/components/schemas/TelephoneNumber"
+    PersonName:
+      type: object
+      description: The name of the account holder.
+      required:
+        - given
+        - family
+      properties:
+        given:
+          type: string
+          description: Given name, or first name of a Person.
+        additional:
+          type: string
+          description: An additional name for a Person, can be used for a middle name.
+        family:
+          type: string
+          description: Family name, or last name, or surname of a Person.
+        second-family:
+          type: string
+          description: Second family name, or second last name, or second surname of a Person.
+        prefix:
+          type: string
+          description: A honorific prefix preceding a Person's name such as Dr/Mrs/Mr.
+        suffix:
+          type: string
+          description: A honorific suffix following a Person's name such as M.D./PhD/MSCSW.
+    TelephoneNumber:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          type: string
+          description: The phone number type
+          enum:
+            - MOBILE
+            - LANDLINE
+        value:
+          description: The value of the phone number
+          type: string
+          format: "E.164"
+    PostalAddress:
+      type: object
+      required:
+        - country
+        - locality
+        - region
+        - streetAddress
+      properties:
+        country:
+          type: string
+          description: The ISO 3166-1 alpha-2 country code.
+          format: "ISO 3166-1"
+        locality:
+          type: string
+          description: The locality in which the street address is, and which is in the region. For example, Mountain View.
+        region:
+          type: string
+          description: The region in which the locality is, and which is in the country. For example, California.
+        streetAddress:
+          type: string
+          description: Street address where the user lives. For example, 9 Wheatley Road.
+        postalCode:
+          type: string
+          description: Postal Code of the address, i.e. Zip Code.
+    Jurisdiction:
+      description: Regulatory jurisdiction used in the integration layer. Represents the regulatory body in that country/province
+      type: string
+      enum:
+        - IT
+        - ES
+        - FR
+        - PT
+        - BE
+        - DE
+        - BG
+        - GR
+        - SE
+        - DK
+        - RO
+        - CH
+        - NL
+        - UK
+        - CZ
+        - IN
+        - EE
+        - ARBA
+        - CAON
+        - INTERNATIONAL
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+    AccountNotFound:
+      description: The account does not exist
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
