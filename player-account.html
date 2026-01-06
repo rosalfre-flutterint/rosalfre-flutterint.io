@@ -720,20 +720,13 @@
                         <label class="form-label" for="createPreferredCurrency">
                             Currency
                         </label>
-                        <div class="mantine-MultiSelect-root" data-multiselect="createPreferredCurrency">
-                            <div class="mantine-Input-wrapper">
-                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
-                                    <span class="multiselect-placeholder" style="color: #999;">Pick currencies</span>
-                                </div>
-                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
-                                    <div class="mantine-MultiSelect-option" data-value="EUR">EUR</div>
-                                    <div class="mantine-MultiSelect-option" data-value="USD">USD</div>
-                                    <div class="mantine-MultiSelect-option" data-value="GBP">GBP</div>
-                                    <div class="mantine-MultiSelect-option" data-value="JPY">JPY</div>
-                                </div>
-                            </div>
-                            <input type="hidden" id="createPreferredCurrency" />
-                        </div>
+                        <select id="createPreferredCurrency" class="form-select">
+                            <option value="">Select currency</option>
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                        </select>
                     </div>
                 </div>
 
@@ -1240,20 +1233,13 @@
                         <label class="form-label" for="editPreferredCurrency">
                             Currency
                         </label>
-                        <div class="mantine-MultiSelect-root" data-multiselect="editPreferredCurrency">
-                            <div class="mantine-Input-wrapper">
-                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
-                                    <span class="multiselect-placeholder" style="color: #999;">Pick currencies</span>
-                                </div>
-                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
-                                    <div class="mantine-MultiSelect-option" data-value="EUR">EUR</div>
-                                    <div class="mantine-MultiSelect-option" data-value="USD">USD</div>
-                                    <div class="mantine-MultiSelect-option" data-value="GBP">GBP</div>
-                                    <div class="mantine-MultiSelect-option" data-value="JPY">JPY</div>
-                                </div>
-                            </div>
-                            <input type="hidden" id="editPreferredCurrency" />
-                        </div>
+                        <select id="editPreferredCurrency" class="form-select">
+                            <option value="">Select currency</option>
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                        </select>
                     </div>
                 </div>
 
@@ -1756,20 +1742,13 @@
                         <label class="form-label" for="modalCreateCurrency">
                             Currency
                         </label>
-                        <div class="mantine-MultiSelect-root" data-multiselect="modalCreateCurrency">
-                            <div class="mantine-Input-wrapper">
-                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
-                                    <span class="multiselect-placeholder" style="color: #999;">Pick currencies</span>
-                                </div>
-                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
-                                    <div class="mantine-MultiSelect-option" data-value="EUR">EUR</div>
-                                    <div class="mantine-MultiSelect-option" data-value="USD">USD</div>
-                                    <div class="mantine-MultiSelect-option" data-value="GBP">GBP</div>
-                                    <div class="mantine-MultiSelect-option" data-value="JPY">JPY</div>
-                                </div>
-                            </div>
-                            <input type="hidden" id="modalCreateCurrency" />
-                        </div>
+                        <select id="modalCreateCurrency" class="form-select">
+                            <option value="">Select currency</option>
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                        </select>
                     </div>
                 </div>
 
@@ -1834,8 +1813,9 @@
 
                 <!-- Identifiers -->
                 <h3 class="subsection-title">Identifiers</h3>
-                <div id="editIdentifiers" class="array-entries"></div>
-                <button type="button" class="btn btn-secondary btn-add" onclick="addEditIdentifier()">Add Identifier</button>
+                
+                <div id="createIdentifiers" class="array-entries"></div>
+                <button type="button" class="btn btn-secondary btn-add" onclick="addCreateIdentifier()">Add Identifier</button>
 
                 <!-- Flags and Privileges & Restrictions -->
                 <h3 class="subsection-title">Flags and Privileges & Restrictions</h3>
@@ -2305,8 +2285,9 @@
     </div>
 
     <script>
-        // Initialize MultiSelect components
+        // Initialize all components when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize MultiSelect components
             const multiSelects = document.querySelectorAll('[data-multiselect]');
             
             multiSelects.forEach(container => {
@@ -2387,6 +2368,110 @@
                     dropdown.style.display = 'none';
                 });
             });
+
+            // Close modal when clicking outside
+            document.getElementById('editModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeEditModal();
+                }
+            });
+
+            // Close create player modal when clicking outside
+            document.getElementById('createPlayerModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeCreatePlayerModal();
+                }
+            });
+
+            // Edit Form submission
+            document.getElementById('editForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+                
+                console.log('Account updated:', data);
+                alert('Account updated successfully!\nCheck console for details.');
+                closeEditModal();
+            });
+
+            // Create Form submission
+            document.getElementById('createForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+                
+                console.log('Player created:', data);
+                alert('Player created successfully!\nCheck console for details.');
+                this.reset();
+                document.getElementById('createIdentifiers').innerHTML = '';
+                document.getElementById('createTelephones').innerHTML = '';
+                createIdentifierCount = 0;
+                createTelephoneCount = 0;
+            });
+
+            // Reset button
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to reset the form?')) {
+                    document.getElementById('createForm').reset();
+                    document.getElementById('createIdentifiers').innerHTML = '';
+                    document.getElementById('createTelephones').innerHTML = '';
+                    createIdentifierCount = 0;
+                    createTelephoneCount = 0;
+                }
+            });
+
+            // Filter Form reset handler
+            document.getElementById('filterForm').addEventListener('reset', function(e) {
+                // Reset multi-select components
+                setTimeout(() => {
+                    const filterMultiSelects = ['filterRestriction', 'filterFlags'];
+                    filterMultiSelects.forEach(id => {
+                        const container = document.querySelector(`[data-multiselect="${id}"]`);
+                        if (container && container._multiselect) {
+                            const multiselect = container._multiselect;
+                            
+                            // Clear selected values array
+                            multiselect.selectedValues.length = 0;
+                            
+                            // Clear hidden input
+                            multiselect.hiddenInput.value = '';
+                            
+                            // Remove all pills from display
+                            const pills = multiselect.inputWrapper.querySelectorAll('.mantine-MultiSelect-value');
+                            pills.forEach(pill => pill.remove());
+                            
+                            // Unselect all options
+                            multiselect.options.forEach(option => {
+                                option.classList.remove('selected');
+                            });
+                            
+                            // Show placeholder
+                            if (multiselect.placeholder) {
+                                multiselect.placeholder.style.display = 'inline';
+                            }
+                        }
+                    });
+                }, 0);
+            });
+
+            // Create Player Modal Form submission
+            document.getElementById('createPlayerModalForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+                
+                console.log('Player created from modal:', data);
+                alert('Player created successfully!\nCheck console for details.');
+                this.reset();
+                closeCreatePlayerModal();
+            });
+
+            // Initialize with one identifier and one telephone for create form
+            addCreateIdentifier();
+            addCreateTelephone();
         });
 
         // Remove value function (called from pill × button)
@@ -2740,116 +2825,13 @@
         // Open Create Player Modal
         function openCreatePlayerModal() {
             document.getElementById('createPlayerModal').classList.add('show');
+                    
         }
 
         // Close Create Player Modal
         function closeCreatePlayerModal() {
             document.getElementById('createPlayerModal').classList.remove('show');
         }
-
-        // Close modal when clicking outside
-        document.getElementById('editModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeEditModal();
-            }
-        });
-
-        // Close create player modal when clicking outside
-        document.getElementById('createPlayerModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeCreatePlayerModal();
-            }
-        });
-
-        // Edit Form submission
-        document.getElementById('editForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-            
-            console.log('Account updated:', data);
-            alert('Account updated successfully!\nCheck console for details.');
-            closeEditModal();
-        });
-
-        // Create Form submission
-        document.getElementById('createForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-            
-            console.log('Player created:', data);
-            alert('Player created successfully!\nCheck console for details.');
-            this.reset();
-            document.getElementById('createIdentifiers').innerHTML = '';
-            document.getElementById('createTelephones').innerHTML = '';
-            createIdentifierCount = 0;
-            createTelephoneCount = 0;
-        });
-
-        // Reset button
-        document.getElementById('resetBtn').addEventListener('click', function() {
-            if (confirm('Are you sure you want to reset the form?')) {
-                document.getElementById('createForm').reset();
-                document.getElementById('createIdentifiers').innerHTML = '';
-                document.getElementById('createTelephones').innerHTML = '';
-                createIdentifierCount = 0;
-                createTelephoneCount = 0;
-            }
-        });
-
-        // Initialize with one identifier and one telephone for create form
-        addCreateIdentifier();
-        addCreateTelephone();
-
-        // Filter Form reset handler
-        document.getElementById('filterForm').addEventListener('reset', function(e) {
-            // Reset multi-select components
-            setTimeout(() => {
-                const filterMultiSelects = ['filterRestriction', 'filterFlags'];
-                filterMultiSelects.forEach(id => {
-                    const container = document.querySelector(`[data-multiselect="${id}"]`);
-                    if (container && container._multiselect) {
-                        const multiselect = container._multiselect;
-                        
-                        // Clear selected values array
-                        multiselect.selectedValues.length = 0;
-                        
-                        // Clear hidden input
-                        multiselect.hiddenInput.value = '';
-                        
-                        // Remove all pills from display
-                        const pills = multiselect.inputWrapper.querySelectorAll('.mantine-MultiSelect-value');
-                        pills.forEach(pill => pill.remove());
-                        
-                        // Unselect all options
-                        multiselect.options.forEach(option => {
-                            option.classList.remove('selected');
-                        });
-                        
-                        // Show placeholder
-                        if (multiselect.placeholder) {
-                            multiselect.placeholder.style.display = 'inline';
-                        }
-                    }
-                });
-            }, 0);
-        });
-
-        // Create Player Modal Form submission
-        document.getElementById('createPlayerModalForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-            
-            console.log('Player created from modal:', data);
-            alert('Player created successfully!\nCheck console for details.');
-            this.reset();
-            closeCreatePlayerModal();
-        });
     </script>
 </body>
 </html>
