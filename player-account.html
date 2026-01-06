@@ -1814,8 +1814,8 @@
                 <!-- Identifiers -->
                 <h3 class="subsection-title">Identifiers</h3>
                 
-                <div id="createIdentifiers" class="array-entries"></div>
-                <button type="button" class="btn btn-secondary btn-add" onclick="addCreateIdentifier()">Add Identifier</button>
+                <div id="modalCreateIdentifiers" class="array-entries"></div>
+                <button type="button" class="btn btn-secondary btn-add" onclick="addModalCreateIdentifier()">Add Identifier</button>
 
                 <!-- Flags and Privileges & Restrictions -->
                 <h3 class="subsection-title">Flags and Privileges & Restrictions</h3>
@@ -2012,8 +2012,8 @@
 
                 <!-- Personal Data - Telephone Numbers -->
                 <h3 class="subsection-title">Personal Data - Telephone Numbers</h3>
-                <div id="editTelephones" class="array-entries"></div>
-                <button type="button" class="btn btn-secondary btn-add" onclick="addEditTelephone()">Add Telephone Number</button>
+                <div id="modalCreateTelephones" class="array-entries"></div>
+                <button type="button" class="btn btn-secondary btn-add" onclick="addModalCreateTelephone()">Add Telephone Number</button>
 
                 <!-- Personal Data - Address -->
                 <h3 class="subsection-title">Personal Data - Address</h3>
@@ -2285,227 +2285,6 @@
     </div>
 
     <script>
-        // Initialize all components when DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize MultiSelect components
-            const multiSelects = document.querySelectorAll('[data-multiselect]');
-            
-            multiSelects.forEach(container => {
-                const inputWrapper = container.querySelector('.mantine-Input-input');
-                const dropdown = container.querySelector('.mantine-MultiSelect-dropdown');
-                const options = container.querySelectorAll('.mantine-MultiSelect-option');
-                const hiddenInput = container.querySelector('input[type="hidden"]');
-                const placeholder = container.querySelector('.multiselect-placeholder');
-                const selectedValues = [];
-
-                // Toggle dropdown
-                inputWrapper.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-                });
-
-                // Handle option selection
-                options.forEach(option => {
-                    option.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const value = option.getAttribute('data-value');
-                        const text = option.textContent;
-
-                        if (option.classList.contains('selected')) {
-                            // Remove selection
-                            option.classList.remove('selected');
-                            const index = selectedValues.findIndex(v => v.value === value);
-                            if (index > -1) {
-                                selectedValues.splice(index, 1);
-                                removeValuePill(inputWrapper, value);
-                            }
-                        } else {
-                            // Add selection
-                            option.classList.add('selected');
-                            selectedValues.push({ value, text });
-                            addValuePill(inputWrapper, value, text);
-                        }
-
-                        // Update hidden input
-                        hiddenInput.value = selectedValues.map(v => v.value).join(',');
-
-                        // Hide/show placeholder
-                        if (selectedValues.length > 0 && placeholder) {
-                            placeholder.style.display = 'none';
-                        } else if (placeholder) {
-                            placeholder.style.display = 'inline';
-                        }
-                    });
-                });
-
-                function addValuePill(wrapper, value, text) {
-                    const pill = document.createElement('span');
-                    pill.className = 'mantine-MultiSelect-value';
-                    pill.setAttribute('data-value', value);
-                    pill.innerHTML = `${text}<span class="mantine-MultiSelect-value-remove" onclick="removeMultiSelectValue(this, event)">×</span>`;
-                    wrapper.appendChild(pill);
-                }
-
-                function removeValuePill(wrapper, value) {
-                    const pill = wrapper.querySelector(`.mantine-MultiSelect-value[data-value="${value}"]`);
-                    if (pill) pill.remove();
-                }
-
-                // Store reference for external access
-                container._multiselect = {
-                    selectedValues,
-                    inputWrapper,
-                    dropdown,
-                    options,
-                    hiddenInput,
-                    placeholder
-                };
-            });
-
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', () => {
-                document.querySelectorAll('.mantine-MultiSelect-dropdown').forEach(dropdown => {
-                    dropdown.style.display = 'none';
-                });
-            });
-
-            // Close modal when clicking outside
-            document.getElementById('editModal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeEditModal();
-                }
-            });
-
-            // Close create player modal when clicking outside
-            document.getElementById('createPlayerModal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeCreatePlayerModal();
-                }
-            });
-
-            // Edit Form submission
-            document.getElementById('editForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const formData = new FormData(this);
-                const data = Object.fromEntries(formData.entries());
-                
-                console.log('Account updated:', data);
-                alert('Account updated successfully!\nCheck console for details.');
-                closeEditModal();
-            });
-
-            // Create Form submission
-            document.getElementById('createForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const formData = new FormData(this);
-                const data = Object.fromEntries(formData.entries());
-                
-                console.log('Player created:', data);
-                alert('Player created successfully!\nCheck console for details.');
-                this.reset();
-                document.getElementById('createIdentifiers').innerHTML = '';
-                document.getElementById('createTelephones').innerHTML = '';
-                createIdentifierCount = 0;
-                createTelephoneCount = 0;
-            });
-
-            // Reset button
-            document.getElementById('resetBtn').addEventListener('click', function() {
-                if (confirm('Are you sure you want to reset the form?')) {
-                    document.getElementById('createForm').reset();
-                    document.getElementById('createIdentifiers').innerHTML = '';
-                    document.getElementById('createTelephones').innerHTML = '';
-                    createIdentifierCount = 0;
-                    createTelephoneCount = 0;
-                }
-            });
-
-            // Filter Form reset handler
-            document.getElementById('filterForm').addEventListener('reset', function(e) {
-                // Reset multi-select components
-                setTimeout(() => {
-                    const filterMultiSelects = ['filterRestriction', 'filterFlags'];
-                    filterMultiSelects.forEach(id => {
-                        const container = document.querySelector(`[data-multiselect="${id}"]`);
-                        if (container && container._multiselect) {
-                            const multiselect = container._multiselect;
-                            
-                            // Clear selected values array
-                            multiselect.selectedValues.length = 0;
-                            
-                            // Clear hidden input
-                            multiselect.hiddenInput.value = '';
-                            
-                            // Remove all pills from display
-                            const pills = multiselect.inputWrapper.querySelectorAll('.mantine-MultiSelect-value');
-                            pills.forEach(pill => pill.remove());
-                            
-                            // Unselect all options
-                            multiselect.options.forEach(option => {
-                                option.classList.remove('selected');
-                            });
-                            
-                            // Show placeholder
-                            if (multiselect.placeholder) {
-                                multiselect.placeholder.style.display = 'inline';
-                            }
-                        }
-                    });
-                }, 0);
-            });
-
-            // Create Player Modal Form submission
-            document.getElementById('createPlayerModalForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const formData = new FormData(this);
-                const data = Object.fromEntries(formData.entries());
-                
-                console.log('Player created from modal:', data);
-                alert('Player created successfully!\nCheck console for details.');
-                this.reset();
-                closeCreatePlayerModal();
-            });
-
-            // Initialize with one identifier and one telephone for create form
-            addCreateIdentifier();
-            addCreateTelephone();
-        });
-
-        // Remove value function (called from pill × button)
-        function removeMultiSelectValue(element, event) {
-            event.stopPropagation();
-            const pill = element.parentElement;
-            const value = pill.getAttribute('data-value');
-            const container = pill.closest('[data-multiselect]');
-            const multiselect = container._multiselect;
-
-            // Remove from selectedValues array
-            const index = multiselect.selectedValues.findIndex(v => v.value === value);
-            if (index > -1) {
-                multiselect.selectedValues.splice(index, 1);
-            }
-
-            // Update hidden input
-            multiselect.hiddenInput.value = multiselect.selectedValues.map(v => v.value).join(',');
-
-            // Unselect option
-            const option = Array.from(multiselect.options).find(opt => opt.getAttribute('data-value') === value);
-            if (option) {
-                option.classList.remove('selected');
-            }
-
-            // Remove pill
-            pill.remove();
-
-            // Show placeholder if no values
-            if (multiselect.selectedValues.length === 0 && multiselect.placeholder) {
-                multiselect.placeholder.style.display = 'inline';
-            }
-        }
-
         // Sample data for accounts
         const accounts = [
             {
@@ -2605,10 +2384,95 @@
         let createTelephoneCount = 0;
         let editIdentifierCount = 0;
         let editTelephoneCount = 0;
+        let modalCreateIdentifierCount = 0;
+        let modalCreateTelephoneCount = 0;
+
+        // Modal Create - Add identifier
+        function addModalCreateIdentifier() {
+            const container = document.getElementById('modalCreateIdentifiers');
+            const index = modalCreateIdentifierCount++;
+            const entry = document.createElement('div');
+            entry.className = 'array-entry';
+            entry.id = `modalCreateIdentifier${index}`;
+            entry.innerHTML = `
+                <div class="array-entry-header">
+                    <span class="array-entry-title">Identifier ${index + 1}</span>
+                    <button type="button" class="btn btn-remove" onclick="removeModalCreateIdentifier(${index})">Remove</button>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Type
+                            <span class="required">*</span>
+                        </label>
+                        <select class="form-select" name="modalCreateIdentifierType${index}" required>
+                            <option value="">Select Type</option>
+                            <option value="IT_FISCAL_CODE">IT_FISCAL_CODE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Value
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" name="modalCreateIdentifierValue${index}" placeholder="Enter identifier value" required>
+                    </div>
+                </div>
+            `;
+            container.appendChild(entry);
+        }
+
+        function removeModalCreateIdentifier(index) {
+            const entry = document.getElementById(`modalCreateIdentifier${index}`);
+            if (entry) entry.remove();
+        }
+
+        // Modal Create - Add telephone
+        function addModalCreateTelephone() {
+            const container = document.getElementById('modalCreateTelephones');
+            const index = modalCreateTelephoneCount++;
+            const entry = document.createElement('div');
+            entry.className = 'array-entry';
+            entry.id = `modalCreateTelephone${index}`;
+            entry.innerHTML = `
+                <div class="array-entry-header">
+                    <span class="array-entry-title">Telephone Number ${index + 1}</span>
+                    <button type="button" class="btn btn-remove" onclick="removeModalCreateTelephone(${index})">Remove</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Type
+                            <span class="required">*</span>
+                        </label>
+                        <select class="form-select" name="modalCreateTelephoneType${index}" required>
+                            <option value="">Select Type</option>
+                            <option value="MOBILE">MOBILE</option>
+                            <option value="LANDLINE">LANDLINE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Number
+                            <span class="required">*</span>
+                        </label>
+                        <input type="tel" class="form-input" name="modalCreateTelephoneValue${index}" placeholder="E.164 format" required>
+                    </div>
+                </div>
+            `;
+            container.appendChild(entry);
+        }
+
+        function removeModalCreateTelephone(index) {
+            const entry = document.getElementById(`modalCreateTelephone${index}`);
+            if (entry) entry.remove();
+        }
 
         // Create form - Add identifier
         function addCreateIdentifier() {
+            console.log('addCreateIdentifier called');
             const container = document.getElementById('createIdentifiers');
+            console.log('container:', container);
             const index = createIdentifierCount++;
             const entry = document.createElement('div');
             entry.className = 'array-entry';
@@ -2832,6 +2696,227 @@
         function closeCreatePlayerModal() {
             document.getElementById('createPlayerModal').classList.remove('show');
         }
+
+        // Remove value function (called from pill × button)
+        function removeMultiSelectValue(element, event) {
+            event.stopPropagation();
+            const pill = element.parentElement;
+            const value = pill.getAttribute('data-value');
+            const container = pill.closest('[data-multiselect]');
+            const multiselect = container._multiselect;
+
+            // Remove from selectedValues array
+            const index = multiselect.selectedValues.findIndex(v => v.value === value);
+            if (index > -1) {
+                multiselect.selectedValues.splice(index, 1);
+            }
+
+            // Update hidden input
+            multiselect.hiddenInput.value = multiselect.selectedValues.map(v => v.value).join(',');
+
+            // Unselect option
+            const option = Array.from(multiselect.options).find(opt => opt.getAttribute('data-value') === value);
+            if (option) {
+                option.classList.remove('selected');
+            }
+
+            // Remove pill
+            pill.remove();
+
+            // Show placeholder if no values
+            if (multiselect.selectedValues.length === 0 && multiselect.placeholder) {
+                multiselect.placeholder.style.display = 'inline';
+            }
+        }
+
+        // Initialize all components when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize MultiSelect components
+            const multiSelects = document.querySelectorAll('[data-multiselect]');
+            
+            multiSelects.forEach(container => {
+                const inputWrapper = container.querySelector('.mantine-Input-input');
+                const dropdown = container.querySelector('.mantine-MultiSelect-dropdown');
+                const options = container.querySelectorAll('.mantine-MultiSelect-option');
+                const hiddenInput = container.querySelector('input[type="hidden"]');
+                const placeholder = container.querySelector('.multiselect-placeholder');
+                const selectedValues = [];
+
+                // Toggle dropdown
+                inputWrapper.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                });
+
+                // Handle option selection
+                options.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const value = option.getAttribute('data-value');
+                        const text = option.textContent;
+
+                        if (option.classList.contains('selected')) {
+                            // Remove selection
+                            option.classList.remove('selected');
+                            const index = selectedValues.findIndex(v => v.value === value);
+                            if (index > -1) {
+                                selectedValues.splice(index, 1);
+                                removeValuePill(inputWrapper, value);
+                            }
+                        } else {
+                            // Add selection
+                            option.classList.add('selected');
+                            selectedValues.push({ value, text });
+                            addValuePill(inputWrapper, value, text);
+                        }
+
+                        // Update hidden input
+                        hiddenInput.value = selectedValues.map(v => v.value).join(',');
+
+                        // Hide/show placeholder
+                        if (selectedValues.length > 0 && placeholder) {
+                            placeholder.style.display = 'none';
+                        } else if (placeholder) {
+                            placeholder.style.display = 'inline';
+                        }
+                    });
+                });
+
+                function addValuePill(wrapper, value, text) {
+                    const pill = document.createElement('span');
+                    pill.className = 'mantine-MultiSelect-value';
+                    pill.setAttribute('data-value', value);
+                    pill.innerHTML = `${text}<span class="mantine-MultiSelect-value-remove" onclick="removeMultiSelectValue(this, event)">×</span>`;
+                    wrapper.appendChild(pill);
+                }
+
+                function removeValuePill(wrapper, value) {
+                    const pill = wrapper.querySelector(`.mantine-MultiSelect-value[data-value="${value}"]`);
+                    if (pill) pill.remove();
+                }
+
+                // Store reference for external access
+                container._multiselect = {
+                    selectedValues,
+                    inputWrapper,
+                    dropdown,
+                    options,
+                    hiddenInput,
+                    placeholder
+                };
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', () => {
+                document.querySelectorAll('.mantine-MultiSelect-dropdown').forEach(dropdown => {
+                    dropdown.style.display = 'none';
+                });
+            });
+
+            // Close modal when clicking outside
+            document.getElementById('editModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeEditModal();
+                }
+            });
+
+            // Close create player modal when clicking outside
+            document.getElementById('createPlayerModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeCreatePlayerModal();
+                }
+            });
+
+            // Edit Form submission
+            document.getElementById('editForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+                
+                console.log('Account updated:', data);
+                alert('Account updated successfully!\nCheck console for details.');
+                closeEditModal();
+            });
+
+            // Create Form submission
+            document.getElementById('createForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+                
+                console.log('Player created:', data);
+                alert('Player created successfully!\nCheck console for details.');
+                this.reset();
+                document.getElementById('createIdentifiers').innerHTML = '';
+                document.getElementById('createTelephones').innerHTML = '';
+                createIdentifierCount = 0;
+                createTelephoneCount = 0;
+            });
+
+            // Reset button
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to reset the form?')) {
+                    document.getElementById('createForm').reset();
+                    document.getElementById('createIdentifiers').innerHTML = '';
+                    document.getElementById('createTelephones').innerHTML = '';
+                    createIdentifierCount = 0;
+                    createTelephoneCount = 0;
+                }
+            });
+
+            // Filter Form reset handler
+            document.getElementById('filterForm').addEventListener('reset', function(e) {
+                // Reset multi-select components
+                setTimeout(() => {
+                    const filterMultiSelects = ['filterRestriction', 'filterFlags'];
+                    filterMultiSelects.forEach(id => {
+                        const container = document.querySelector(`[data-multiselect="${id}"]`);
+                        if (container && container._multiselect) {
+                            const multiselect = container._multiselect;
+                            
+                            // Clear selected values array
+                            multiselect.selectedValues.length = 0;
+                            
+                            // Clear hidden input
+                            multiselect.hiddenInput.value = '';
+                            
+                            // Remove all pills from display
+                            const pills = multiselect.inputWrapper.querySelectorAll('.mantine-MultiSelect-value');
+                            pills.forEach(pill => pill.remove());
+                            
+                            // Unselect all options
+                            multiselect.options.forEach(option => {
+                                option.classList.remove('selected');
+                            });
+                            
+                            // Show placeholder
+                            if (multiselect.placeholder) {
+                                multiselect.placeholder.style.display = 'inline';
+                            }
+                        }
+                    });
+                }, 0);
+            });
+
+            // Create Player Modal Form submission
+            document.getElementById('createPlayerModalForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+                
+                console.log('Player created from modal:', data);
+                alert('Player created successfully!\nCheck console for details.');
+                this.reset();
+                closeCreatePlayerModal();
+            });
+
+            // Initialize with one identifier and one telephone for create form
+            addCreateIdentifier();
+            addCreateTelephone();
+        });
     </script>
 </body>
 </html>
