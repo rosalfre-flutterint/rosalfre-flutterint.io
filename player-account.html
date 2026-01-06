@@ -1274,17 +1274,24 @@
                         <label class="form-label" for="editRestrictions">
                             Restrictions
                         </label>
-                        <select id="editRestrictions" class="form-select">
-                            <option value="">Select Restriction</option>
-                            <option value="SELF_EXCLUDED">SELF_EXCLUDED</option>
-                            <option value="BANNED_BY_REGULATOR">BANNED_BY_REGULATOR</option>
-                            <option value="RESTRICTED_ACCESS">RESTRICTED_ACCESS</option>
-                            <option value="DENY_SHARED_LIQUIDITY">DENY_SHARED_LIQUIDITY</option>
-                            <option value="LOGIN_ONLY">LOGIN_ONLY</option>
-                            <option value="TEMPORARY_CLOSED">TEMPORARY_CLOSED</option>
-                            <option value="CLOSED">CLOSED</option>
-                            <option value="ANONYMIZED">ANONYMIZED</option>
-                        </select>
+                        <div class="mantine-MultiSelect-root" data-multiselect="editRestrictions">
+                            <div class="mantine-Input-wrapper">
+                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span class="multiselect-placeholder" style="color: #999;">Pick restrictions</span>
+                                </div>
+                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
+                                    <div class="mantine-MultiSelect-option" data-value="SELF_EXCLUDED">SELF_EXCLUDED</div>
+                                    <div class="mantine-MultiSelect-option" data-value="BANNED_BY_REGULATOR">BANNED_BY_REGULATOR</div>
+                                    <div class="mantine-MultiSelect-option" data-value="RESTRICTED_ACCESS">RESTRICTED_ACCESS</div>
+                                    <div class="mantine-MultiSelect-option" data-value="DENY_SHARED_LIQUIDITY">DENY_SHARED_LIQUIDITY</div>
+                                    <div class="mantine-MultiSelect-option" data-value="LOGIN_ONLY">LOGIN_ONLY</div>
+                                    <div class="mantine-MultiSelect-option" data-value="TEMPORARY_CLOSED">TEMPORARY_CLOSED</div>
+                                    <div class="mantine-MultiSelect-option" data-value="CLOSED">CLOSED</div>
+                                    <div class="mantine-MultiSelect-option" data-value="ANONYMIZED">ANONYMIZED</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="editRestrictions" />
+                        </div>
                     </div>
                 </div>
 
@@ -1843,17 +1850,24 @@
                         <label class="form-label" for="editRestrictions">
                             Restrictions
                         </label>
-                        <select id="editRestrictions" class="form-select">
-                            <option value="">Select Restriction</option>
-                            <option value="SELF_EXCLUDED">SELF_EXCLUDED</option>
-                            <option value="BANNED_BY_REGULATOR">BANNED_BY_REGULATOR</option>
-                            <option value="RESTRICTED_ACCESS">RESTRICTED_ACCESS</option>
-                            <option value="DENY_SHARED_LIQUIDITY">DENY_SHARED_LIQUIDITY</option>
-                            <option value="LOGIN_ONLY">LOGIN_ONLY</option>
-                            <option value="TEMPORARY_CLOSED">TEMPORARY_CLOSED</option>
-                            <option value="CLOSED">CLOSED</option>
-                            <option value="ANONYMIZED">ANONYMIZED</option>
-                        </select>
+                        <div class="mantine-MultiSelect-root" data-multiselect="editRestrictions">
+                            <div class="mantine-Input-wrapper">
+                                <div class="mantine-Input-input" style="cursor: pointer; min-height: 42px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span class="multiselect-placeholder" style="color: #999;">Pick restrictions</span>
+                                </div>
+                                <div class="mantine-MultiSelect-dropdown" style="display: none;">
+                                    <div class="mantine-MultiSelect-option" data-value="SELF_EXCLUDED">SELF_EXCLUDED</div>
+                                    <div class="mantine-MultiSelect-option" data-value="BANNED_BY_REGULATOR">BANNED_BY_REGULATOR</div>
+                                    <div class="mantine-MultiSelect-option" data-value="RESTRICTED_ACCESS">RESTRICTED_ACCESS</div>
+                                    <div class="mantine-MultiSelect-option" data-value="DENY_SHARED_LIQUIDITY">DENY_SHARED_LIQUIDITY</div>
+                                    <div class="mantine-MultiSelect-option" data-value="LOGIN_ONLY">LOGIN_ONLY</div>
+                                    <div class="mantine-MultiSelect-option" data-value="TEMPORARY_CLOSED">TEMPORARY_CLOSED</div>
+                                    <div class="mantine-MultiSelect-option" data-value="CLOSED">CLOSED</div>
+                                    <div class="mantine-MultiSelect-option" data-value="ANONYMIZED">ANONYMIZED</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="editRestrictions" />
+                        </div>
                     </div>
                 </div>
 
