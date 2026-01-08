@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transactions - Wireframe</title>
+    <!-- Updated: 2026-01-08 -->
     
     <!-- Mantine CSS -->
     <link rel="stylesheet" href="https://unpkg.com/@mantine/core@7.3.2/styles.css">
@@ -261,7 +262,7 @@
         /* Form Styles */
         .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
+            grid-template-columns: 1fr 1fr auto;
             gap: 16px;
             align-items: end;
         }
@@ -464,32 +465,21 @@
                         >
                     </div>
 
-                    <!-- Date Range Start Field -->
+                    <!-- Date Range Picker -->
                     <div class="form-group">
-                        <label class="form-label" for="dateFrom">
-                            Date From
+                        <label class="form-label">
+                            Date Range
                             <span class="required">*</span>
                         </label>
                         <input 
-                            type="date" 
-                            id="dateFrom" 
+                            type="text" 
+                            id="dateRange" 
                             class="form-input" 
+                            placeholder="YYYY-MM-DD - YYYY-MM-DD"
                             required
                         >
-                    </div>
-
-                    <!-- Date Range End Field -->
-                    <div class="form-group">
-                        <label class="form-label" for="dateTo">
-                            Date To
-                            <span class="required">*</span>
-                        </label>
-                        <input 
-                            type="date" 
-                            id="dateTo" 
-                            class="form-input" 
-                            required
-                        >
+                        <input type="hidden" id="dateFrom">
+                        <input type="hidden" id="dateTo">
                     </div>
 
                     <!-- Form Actions -->
@@ -506,7 +496,7 @@
                     <thead>
                         <!-- First Header Row: Group Titles -->
                         <tr>
-                            <th colspan="3" style="text-align: center; font-weight: 700;"></th>
+                            <th colspan="4" style="text-align: center; font-weight: 700;"></th>
                             <th colspan="2" style="text-align: center; font-weight: 700;">Dispersion</th>
                             <th colspan="2" style="text-align: center; font-weight: 700;">Balance After</th>
                         </tr>
@@ -514,17 +504,19 @@
                         <tr>
                             <th>ID</th>
                             <th class="sortable" data-column="1">Action</th>
-                            <th class="sortable" data-column="2">Source Transaction ID</th>
-                            <th class="sortable" data-column="3">Amount</th>
-                            <th class="sortable" data-column="4">Asset Type</th>
-                            <th class="sortable" data-column="5">Amount</th>
-                            <th class="sortable" data-column="6">Asset Type</th>
+                            <th class="sortable" data-column="2">Updated Time</th>
+                            <th class="sortable" data-column="3">Source Transaction ID</th>
+                            <th class="sortable" data-column="4">Amount</th>
+                            <th class="sortable" data-column="5">Asset Type</th>
+                            <th class="sortable" data-column="6">Amount</th>
+                            <th class="sortable" data-column="7">Asset Type</th>
                         </tr>
                     </thead>
                     <tbody id="transactionsTableBody">
                         <tr class="transaction-row" data-id="TXN001">
                             <td><span class="clickable-id"><span class="expand-icon">▶</span><span class="id-text">TXN001</span></span></td>
                             <td>Debit</td>
+                            <td>2026-01-07 14:23</td>
                             <td>ba47fd02-2a40-4352-96c4-a63e09415896</td>
                             <td>$50.00</td>
                             <td>Cash</td>
@@ -532,7 +524,7 @@
                             <td>Cash</td>
                         </tr>
                         <tr class="expandable-row" data-parent="TXN001">
-                            <td colspan="7">
+                            <td colspan="8">
                                 <div class="expandable-content">
                                     <div class="context-details">
                                         <div class="context-item">
@@ -558,6 +550,7 @@
                         <tr class="transaction-row" data-id="TXN002">
                             <td><span class="clickable-id"><span class="expand-icon">▶</span><span class="id-text">TXN002</span></span></td>
                             <td>Credit</td>
+                            <td>2026-01-07 15:45</td>
                             <td>c8e91b3d-5f72-48a9-b123-7d8c4e6f9a0b</td>
                             <td>$25.00</td>
                             <td>PSN_Bonus</td>
@@ -565,7 +558,7 @@
                             <td>PSN_Bonus</td>
                         </tr>
                         <tr class="expandable-row" data-parent="TXN002">
-                            <td colspan="7">
+                            <td colspan="8">
                                 <div class="expandable-content">
                                     <div class="context-details">
                                         <div class="context-item">
@@ -591,6 +584,7 @@
                         <tr class="transaction-row" data-id="TXN003">
                             <td><span class="clickable-id"><span class="expand-icon">▶</span><span class="id-text">TXN003</span></span></td>
                             <td>Debit</td>
+                            <td>2026-01-06 09:12</td>
                             <td>d1f8a2c9-6e4b-4d7a-9c3e-1b5f8a2d7c4e</td>
                             <td>1000</td>
                             <td>Cash</td>
@@ -598,7 +592,7 @@
                             <td>Cash</td>
                         </tr>
                         <tr class="expandable-row" data-parent="TXN003">
-                            <td colspan="7">
+                            <td colspan="8">
                                 <div class="expandable-content">
                                     <div class="context-details">
                                         <div class="context-item">
@@ -624,6 +618,7 @@
                         <tr class="transaction-row" data-id="TXN004">
                             <td><span class="clickable-id"><span class="expand-icon">▶</span><span class="id-text">TXN004</span></span></td>
                             <td>Credit</td>
+                            <td>2026-01-06 16:33</td>
                             <td>3a7c9e4f-8b2d-4e1a-b6f5-9c8d2e7a3b1f</td>
                             <td>$200.00</td>
                             <td>PSN_Bonus</td>
@@ -631,7 +626,7 @@
                             <td>Cash</td>
                         </tr>
                         <tr class="expandable-row" data-parent="TXN004">
-                            <td colspan="7">
+                            <td colspan="8">
                                 <div class="expandable-content">
                                     <div class="context-details">
                                         <div class="context-item">
@@ -657,6 +652,7 @@
                         <tr class="transaction-row" data-id="TXN005">
                             <td><span class="clickable-id"><span class="expand-icon">▶</span><span class="id-text">TXN005</span></span></td>
                             <td>Debit</td>
+                            <td>2026-01-05 11:58</td>
                             <td>f2e8b4d6-9c1a-4e7b-a3f5-8d2c6e1b9a4d</td>
                             <td>$15.00</td>
                             <td>Cash</td>
@@ -664,7 +660,7 @@
                             <td>PSN_Bonus</td>
                         </tr>
                         <tr class="expandable-row" data-parent="TXN005">
-                            <td colspan="7">
+                            <td colspan="8">
                                 <div class="expandable-content">
                                     <div class="context-details">
                                         <div class="context-item">
@@ -694,35 +690,54 @@
     </main>
 
     <script>
+        // Date Range Input
+        const dateRangeInput = document.getElementById('dateRange');
+        const dateFromInput = document.getElementById('dateFrom');
+        const dateToInput = document.getElementById('dateTo');
+        
+        // Calculate default dates
+        const today = new Date();
+        const lastMonth = new Date();
+        lastMonth.setMonth(lastMonth.getMonth() - 1);
+        
+        const todayStr = today.toISOString().split('T')[0];
+        const lastMonthStr = lastMonth.toISOString().split('T')[0];
+        
+        // Set default date range
+        dateRangeInput.value = `${lastMonthStr} - ${todayStr}`;
+        dateFromInput.value = lastMonthStr;
+        dateToInput.value = todayStr;
+        
+        // Parse date range input when user types
+        dateRangeInput.addEventListener('blur', function() {
+            const parts = this.value.split(' - ');
+            if (parts.length === 2) {
+                dateFromInput.value = parts[0].trim();
+                dateToInput.value = parts[1].trim();
+            }
+        });
+
         // Filter Form submission
         document.getElementById('filterForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const formData = {
                 playerId: document.getElementById('playerId').value,
-                dateFrom: document.getElementById('dateFrom').value,
-                dateTo: document.getElementById('dateTo').value
+                dateFrom: dateFromInput.value,
+                dateTo: dateToInput.value
             };
             
             console.log('Filter applied:', formData);
             alert('Filter applied successfully!\nCheck console for details.');
         });
 
-        // Set default dates
-        const today = new Date().toISOString().split('T')[0];
-        const lastMonth = new Date();
-        lastMonth.setMonth(lastMonth.getMonth() - 1);
-        const lastMonthStr = lastMonth.toISOString().split('T')[0];
-        
-        document.getElementById('dateFrom').value = lastMonthStr;
-        document.getElementById('dateTo').value = today;
-
         // Reset button
         document.getElementById('resetBtn').addEventListener('click', function() {
             if (confirm('Are you sure you want to reset the form?')) {
                 document.getElementById('filterForm').reset();
-                document.getElementById('dateFrom').value = lastMonthStr;
-                document.getElementById('dateTo').value = today;
+                dateRangeInput.value = `${lastMonthStr} - ${todayStr}`;
+                dateFromInput.value = lastMonthStr;
+                dateToInput.value = todayStr;
             }
         });
 
